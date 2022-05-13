@@ -15,3 +15,10 @@ class ByteComponent:
     
     def setColor(self, color):
         self.color = color
+    
+    def toString(self):
+        print("+++++++++++")
+        print(self.bounds)
+        print(self.length)
+        print(self.color)
+        print("+++++++++++")
