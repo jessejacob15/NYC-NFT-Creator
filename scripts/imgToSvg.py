@@ -63,7 +63,7 @@ def getTopY(img, copyImg):
 def getBottomY(img, copyImg):
     w = img.getWidth()
     h = img.getHeight()
-    for y in range(h,0,-1):
+    for y in range(h-1,0,-1):
         for x in range(w):
             pixel = img.getPixel(x, y)
             red = pixel.getRed()
@@ -75,8 +75,7 @@ def getBottomY(img, copyImg):
                     for j in range(y, y -20,-1):
                         copyImg.setPixel(i, j, redPixel)
                 copyImg.save("withred")
-                print(y)
-                bounds.append(y)
+                bounds[2] = y
                 return y      
 
 
