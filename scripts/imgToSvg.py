@@ -35,7 +35,7 @@ def parseImg(img):
             for i in range(x, x+20):
                     for j in range(y, y + 20):
                         myImg.setPixel(i, j, newPixel)
-            myImg.save("smooth")
+    myImg.save("generatedImages/smooth")
             
 
 def colorGrouping(pixelRGB):
@@ -78,7 +78,7 @@ def getTopY(img, copyImg):
                 for i in range(x, x+20):
                     for j in range(y, y + 20):
                         copyImg.setPixel(i, j, redPixel)
-                copyImg.save("withred")
+                copyImg.save("generatedImages/withred")
                 return y
 
 
@@ -96,7 +96,7 @@ def getLeftX(img, copyImg):
                 for i in range(x, x+20):
                     for j in range(y, y + 20):
                         copyImg.setPixel(i, j, redPixel)
-                copyImg.save("withred")            
+                copyImg.save("generatedImages/withred")            
                 return x
 
 def getBottomY(img, copyImg):
@@ -113,7 +113,7 @@ def getBottomY(img, copyImg):
                 for i in range(x, x+20):
                     for j in range(y, y -20,-1):
                         copyImg.setPixel(i, j, redPixel)
-                copyImg.save("withred")
+                copyImg.save("generatedImages/withred")
                 return y     
 
 
@@ -131,7 +131,7 @@ def getRightX(img, copyImg):
                 for i in range(x, x+20):
                     for j in range(y, y -20,-1):
                         copyImg.setPixel(i, j, redPixel)
-                copyImg.save("withred")
+                copyImg.save("generatedImages/withred")
                 return x      
 
 
