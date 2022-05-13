@@ -58,6 +58,7 @@ def getBoundary(img):
                 return y
                 
 
+
 def display_image(original_img, transformed_img):
     ''' (Image object, Image object) -> NoneType
     Display an original and transformed image.
