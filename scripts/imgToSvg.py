@@ -35,11 +35,12 @@ def recieveImg(img):
     print(byteComponents)
 
 def buildBytes():
+    return None
 
 
 
 def buildSVG():
-
+    return None
 
 
 def display_image(original_img, transformed_img):
