@@ -4,6 +4,8 @@ import ByteComponent
 
 byteComponents = []
 colors = []
+bounds = []
+redPixel = image.Pixel(255, 0, 0)
 #[length, colorIndex]
 
 
@@ -34,13 +36,14 @@ colors = []
 #             byteComponents.append(newByte)
 #     print(byteComponents)
     
-def getBoundary(img):
-    bounds = []
+def getBoundary(img, copyImg):
+    bounds[0] = getTopY(img, copyImg)
+    bounds[1] = getBottomY(img, copyImg)
+    
+
+def getTopY(img, copyImg):
     w = img.getWidth()
     h = img.getHeight()
-    copyImg = img.copy()
-    redPixel = image.Pixel(100, 0, 0)
-    #GET TOP Y
     for y in range(h):
         for x in range(w):
             pixel = img.getPixel(x, y)
@@ -49,14 +52,32 @@ def getBoundary(img):
             blue = pixel.getBlue()
             color = '#%02x%02x%02x' % (red, green, blue)
             if color != '#000000':
-                copyImg.setPixel(x, y, redPixel)
-                win = image.ImageWin(copyImg.getWidth(), copyImg.getHeight(), "Image Processing")
-                copyImg.draw(win)
+                for i in range(x, x+20):
+                    for j in range(y, y + 20):
+                        copyImg.setPixel(i, j, redPixel)
+                copyImg.save("withred")
                 print(y)
                 bounds.append(y)
-                copyImg.draw(win)
                 return y
-                
+
+def getBottomY(img, copyImg):
+    w = img.getWidth()
+    h = img.getHeight()
+    for y in range(h,0,-1):
+        for x in range(w):
+            pixel = img.getPixel(x, y)
+            red = pixel.getRed()
+            green = pixel.getGreen()
+            blue = pixel.getBlue()
+            color = '#%02x%02x%02x' % (red, green, blue)
+            if color != '#000000':
+                for i in range(x, x+20):
+                    for j in range(y, y -20,-1):
+                        copyImg.setPixel(i, j, redPixel)
+                copyImg.save("withred")
+                print(y)
+                bounds.append(y)
+                return y      
 
 
 def display_image(original_img, transformed_img):
@@ -82,8 +103,9 @@ def main():
     transformations to those images as required for HW 04. The images
     are then displayed.
     """
-    original_img = image.FileImage('head.PNG')
-    getBoundary(original_img)
+    myImg = image.FileImage('head.png')
+    copyImg = myImg.copy()
+    getBoundary(myImg, copyImg)
 
 if __name__ == "__main__":
     main()
