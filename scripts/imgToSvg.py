@@ -23,9 +23,10 @@ def recieveImg(img):
             green = pixel.getGreen()
             blue = pixel.getBlue()
             color = '#%02x%02x%02x' % (red, green, blue)
-            colors.apped(color)
+            if(color not in colors):
+                colors.apped(color)
             newByte = ByteComponent(x, y, x-29, y-29)
-            newByte.setColor = color
+            newByte.setColor = colors.index (color)
             newByte.setLength = 1
             x += 29
             y += 29
@@ -33,12 +34,11 @@ def recieveImg(img):
     
     print(byteComponents)
 
+def buildBytes():
 
 
-            
 
-            
-    return red_only_img # return filtered image
+def buildSVG():
 
 
 
