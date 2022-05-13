@@ -8,7 +8,6 @@ colors = []
 colorsRGB = []
 bounds = [0,0,0,0] # TopY, RightX, BottomY, LeftX
 redPixel = image.Pixel(255, 0, 0)
-#[length, colorIndex]
 
 def parseImg(img):
     """ (Image object) -> Image object
@@ -16,7 +15,7 @@ def parseImg(img):
     out and only red remains.
     """
     myImg = img.copy() # create copy to manipulate
-    for x in range(bounds[3],(bounds[1] + 20),20): # iterate through all (x, y) pixel pairs
+    for x in range(bounds[3],(bounds[1] - 20),20): # iterate through all (x, y) pixel pairs
         for y in range(bounds[0],(bounds[2] - 20),20):
             pixel = img.getPixel(x, y)
             red = pixel.getRed()
@@ -35,8 +34,7 @@ def parseImg(img):
             for i in range(x, x+20):
                     for j in range(y, y + 20):
                         myImg.setPixel(i, j, newPixel)
-    myImg.save("generatedImages/smooth")
-            
+    myImg.save("generatedImages/smooth")          
 
 def colorGrouping(pixelRGB):
     pixelRed = pixelRGB[0]
@@ -53,16 +51,11 @@ def colorGrouping(pixelRGB):
     colorsRGB.append(pixelRGB)
     return pixelRGB
         
-    
-
-
-
 def getBoundary(img, copyImg):
     bounds[0] = getTopY(img, copyImg)
     bounds[1] = getRightX(img, copyImg)
     bounds[2] = getBottomY(img, copyImg)
     bounds[3] = getLeftX(img, copyImg)
-
 
 def getTopY(img, copyImg):
     w = img.getWidth()
@@ -80,7 +73,6 @@ def getTopY(img, copyImg):
                         copyImg.setPixel(i, j, redPixel)
                 copyImg.save("generatedImages/withred")
                 return y
-
 
 def getLeftX(img, copyImg):
     w = img.getWidth()
@@ -116,7 +108,6 @@ def getBottomY(img, copyImg):
                 copyImg.save("generatedImages/withred")
                 return y     
 
-
 def getRightX(img, copyImg):
     w = img.getWidth()
     h = img.getHeight()
@@ -128,12 +119,11 @@ def getRightX(img, copyImg):
             blue = pixel.getBlue()
             color = '#%02x%02x%02x' % (red, green, blue)
             if color != '#000000':
-                for i in range(x, x+20):
-                    for j in range(y, y -20,-1):
+                for i in range(x, x-20, -1):
+                    for j in range(y, y + 20):
                         copyImg.setPixel(i, j, redPixel)
                 copyImg.save("generatedImages/withred")
                 return x      
-
 
 def buildBytes():
     componentsToBytes = bytearray()
@@ -152,7 +142,8 @@ def main():
     transformations to those images as required for HW 04. The images
     are then displayed.
     """
-    myImg = image.FileImage('head.png')
+    fileName = input("enter image filename: ")
+    myImg = image.FileImage(fileName)
     copyImg = myImg.copy()
     getBoundary(myImg, copyImg)
     parseImg(myImg)
