@@ -1,6 +1,5 @@
 from copy import copy
 import image
-import math
 from ByteComponent import ByteComponent
 
 byteComponents = []
@@ -148,9 +147,8 @@ def main():
     getBoundary(myImg, copyImg)
     parseImg(myImg)
     # printBytes()
-    print("bounds", bounds)
+    print("bounds: ", bounds)
     print("ammmount of rects: ", len(byteComponents))
-    print("ammount of colorsRGB:", len(colorsRGB))
     print("ammount of colorsHEX:", len(colors))
     print(buildBytes())
 
