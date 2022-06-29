@@ -42,20 +42,21 @@ class PaletteGenerator:
             rgb = matplotlib.colors.to_rgb(hexcolor)
             self.colorsRGB.append(rgb)
         print(self.colorsRGB)
-        
+
+        #### Use clustering to find the numCols common colors
         kmeans = KMeans(n_clusters=numCols, random_state=0).fit(self.colorsRGB)
         print(kmeans.cluster_centers_)
         print (kmeans.labels_)
 
+        #### Save the common colors as hex colors
         self.centers = kmeans.cluster_centers_
         for c in self.centers:
             self.centersHex.append(matplotlib.colors.to_hex(c))
 
 
-
-
         labels = kmeans.labels_
 
+        #### For each other color, find the % distance in R, G, B from their cluster center and map it to the colorDirects map [colorId : (clusterCenter, [DiffR, DiffG, DiffB])  
         for i in range (0, len(self.colorsRGB)):
             clusterIndex = labels[i]
             clusterRGB = self.centers[clusterIndex]
@@ -112,20 +113,3 @@ class PaletteGenerator:
 
 
 
-    #     ##### get the most numCols most common colors
-    #     sordtedCols = {k: v for k, v in sorted(colorCounts.items(), key=lambda item: item[1])}
-    #     keys = sortedCols.keys()
-    #     for i in range(0, numCols):
-    #         topColors[i] = keys[i]
-
-    #     #### for all of the rest, we will map the color index to the closest color and the difference in R, G, B from their closest color
-    #     for i in range(numCols, len(keys)):
-    #         closestColor = topColors[0]
-    #         closestDist = 
-
-    #         ##Calculate the closest color and create a colorDirects 
-    #         for color in topColors:
-    #             dist = calcDistance(rgbColorArray[keys[i]], rgbColorArray[color])
-    #             if dist < closestDist:
-    #                 closestDist = dist
-    #                 closestColor = keys[i]
