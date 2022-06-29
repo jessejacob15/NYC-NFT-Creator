@@ -1,6 +1,8 @@
 from copy import copy
+from fileinput import filename
 import image
 from ByteComponent import ByteComponent
+from PaletteGenerator import PaletteGenerator
 
 byteComponents = []
 colors = []
@@ -23,16 +25,17 @@ def parseImg(img):
             pixelRGB = [red, green, blue]
             finalRGB = colorGrouping(pixelRGB)
             color = '#%02x%02x%02x' % (finalRGB[0], finalRGB[1], finalRGB[2])
-            if color not in colors:
-                colors.append(color)
-            newByte = ByteComponent(x, y, x+20, y+20)
-            newByte.setColor(colors.index(color))
-            newByte.setLength(1)
-            byteComponents.append(newByte)
-            newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
-            for i in range(x, x+20):
-                    for j in range(y, y + 20):
-                        myImg.setPixel(i, j, newPixel)
+            if color != '#000000':
+                if color not in colors:
+                    colors.append(color)
+                newByte = ByteComponent(x, y, x+20, y+20)
+                newByte.setColor(colors.index(color))
+                newByte.setLength(1)
+                byteComponents.append(newByte)
+                newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
+                for i in range(x, x+20):
+                        for j in range(y, y + 20):
+                            myImg.setPixel(i, j, newPixel)
     myImg.save("generatedImages/smooth")          
 
 def colorGrouping(pixelRGB):
@@ -135,6 +138,19 @@ def printBytes():
     for byte in byteComponents:
         byte.toString()
 
+def bytesToSvg(bytes, palette, name):
+    filename = str(name) + ".svg"
+    svgFile = open(filename, "w")
+    height = abs(bounds[0]-bounds[2])
+    width = abs(bounds[3]-bounds[1])
+    header = '<svg width="'+str(width)+'" height="'+str(height)+'" viewbox ="'+str(bounds[3])+' '+str(bounds[0])+' '+str(width)+' ' +str(height)+'" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
+    svgFile.write(header)
+    for byte in bytes:
+        svgFile.write(byte.toSVG(palette))
+    svgFile.write('</svg>')
+
+
+
 def main():
     """ () -> NoneType
     Main Program that load image(s) from file(s) and performs
@@ -152,6 +168,20 @@ def main():
     print("ammount of colorsHEX:", len(colors))
     print(buildBytes())
 
+    ## Create a Palette Generator using the newly created bytes
+    paletteGen = PaletteGenerator(byteComponents)
+
+    ##Call Parse palette to map the bytes to colors
+    paletteGen.parsePalette()
+
+    ##Decode the gradient using the colors from this ImgToSVG and the number of colors you want the palette to be based on
+    paletteGen.decodeGradient(colors, 1)
+
+    ##Pass a new array of colors to change color of original component (must be the same size as the number passed in above)
+    generatedPalette = paletteGen.generateNewPalette(["#E6067B"])
+
+    ##Convert the new bytes to an svg file called bytes to svg
+    bytesToSvg(byteComponents, generatedPalette, str(bytestosyg))
 
 if __name__ == "__main__":
     main()

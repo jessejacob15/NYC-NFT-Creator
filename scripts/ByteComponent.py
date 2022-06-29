@@ -22,3 +22,11 @@ class ByteComponent:
         print(self.length)
         print(self.color)
         print("+++++++++++")
+    
+    def toSVG(self, hexColors):
+        width = abs(self.bounds[1]-self.bounds[3]) 
+        height = abs(self.bounds[0] - self.bounds[2])
+        xval = self.bounds[3]
+        yval = self.bounds[0]
+        hexcolor = hexColors[self.color]
+        return '<rect width="'+ str(width)+'" height= "' + str(height) +'"  x="' + str(yval)+ '" y="'+ str(xval)+ '" fill="'+ str(hexcolor) +'" />'
