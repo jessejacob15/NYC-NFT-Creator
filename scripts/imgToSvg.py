@@ -181,7 +181,7 @@ def main():
     generatedPalette = paletteGen.generateNewPalette(["#E6067B"])
 
     ##Convert the new bytes to an svg file called bytes to svg
-    bytesToSvg(byteComponents, generatedPalette, str(bytestosyg))
+    bytesToSvg(byteComponents, generatedPalette, "bytestosyg")
 
 if __name__ == "__main__":
     main()
