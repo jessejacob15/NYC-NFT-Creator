@@ -9,13 +9,13 @@ class PaletteGenerator:
 
     bytes = []
 
-    ##Color IDs from Components
+    ##Default Color IDs from Components
     colors = []
 
-    ##RGB Colors where the index corresponds to the ID in colors
+    ##Default RGB Colors where the index corresponds to the ID in colors
     colorsRGB = []
 
-    ##key is the colorID, value is the count
+    ##Default key is the colorID, value is the count
     colorCounts = {}
 
     ##kmeans centers
@@ -33,26 +33,27 @@ class PaletteGenerator:
         for byte in self.bytes:
             self.colorCounts[byte.color] = self.colorCounts.get(byte.color, 0) + 1
         self.colors = [*self.colorCounts]
-        print(self.colorCounts)
 
     def decodeGradient(self,hexColorArray, numCols):
         rgbColorArray = []
+        self.centersHex.clear()
+        self.colorDirects.clear()
+        self.colorsRGB.clear() 
+
         #### map all hex colors to RGB
         for hexcolor in hexColorArray:
             rgb = matplotlib.colors.to_rgb(hexcolor)
             self.colorsRGB.append(rgb)
-        print(self.colorsRGB)
 
         #### Use clustering to find the numCols common colors
         kmeans = KMeans(n_clusters=numCols, random_state=0).fit(self.colorsRGB)
-        print(kmeans.cluster_centers_)
-        print (kmeans.labels_)
+        # print(kmeans.cluster_centers_)
+        # print (kmeans.labels_)
 
         #### Save the common colors as hex colors
         self.centers = kmeans.cluster_centers_
         for c in self.centers:
             self.centersHex.append(matplotlib.colors.to_hex(c))
-
 
         labels = kmeans.labels_
 
@@ -66,7 +67,6 @@ class PaletteGenerator:
             diffB = (clusterRGB[2] - currRGB[2])/clusterRGB[2]
 
             self.colorDirects[self.colors[i]] = (clusterIndex,[diffR, diffG, diffB])
-        print(self.colorDirects)
 
     def generateNewPalette(self, hexColorArray):
         if len(hexColorArray) != len(self.centers):
@@ -80,7 +80,7 @@ class PaletteGenerator:
 
             generatedRGB = []
             for key in self.colorDirects:
-                print(key)
+                # print(key)
                 val = self.colorDirects.get(key)
                 currRGB = newRGB[val[0]]
                 direct = val[1]
@@ -100,13 +100,10 @@ class PaletteGenerator:
                 elif newB < 0:
                     newB = 0
                 generatedRGB.insert(key,[newR, newG, newB])
-            print(generatedRGB)
 
             generatedHex = []
             for rgbColor in generatedRGB:
                 generatedHex.append(matplotlib.colors.to_hex(rgbColor))    
-            print(generatedHex)
-            print(self.centersHex)
             return generatedHex
         
 
