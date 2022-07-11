@@ -2,7 +2,7 @@ from copy import copy
 from fileinput import filename
 
 from numpy import append
-import image
+import image as image
 import random
 from ByteComponent import ByteComponent
 from PaletteGenerator import PaletteGenerator

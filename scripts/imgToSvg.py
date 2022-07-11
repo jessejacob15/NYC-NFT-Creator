@@ -1,7 +1,7 @@
 from copy import copy
 from fileinput import filename
 from pickle import FALSE, TRUE
-import image
+import image as image
 import matplotlib
 from ByteComponent import ByteComponent
 from PaletteGenerator import PaletteGenerator

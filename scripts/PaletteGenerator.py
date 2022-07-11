@@ -1,4 +1,4 @@
-import image
+import image as image
 from ByteComponent import ByteComponent
 import matplotlib
 import numpy as np

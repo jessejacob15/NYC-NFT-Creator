@@ -1,10 +1,11 @@
 from copy import copy
 from fileinput import filename
-import image
+import image as image
 import random
 from ByteComponent import ByteComponent
 from PaletteGenerator import PaletteGenerator
 from imgToSvg import imgToSvg
+import os
 
 def bytesToSvg(bytes, palette):
     print(len(palette))
@@ -60,7 +61,8 @@ class NFTSeeder:
             background = random.choice(self.backgroundColors)
 
             filename = "NYC"+ str(i) + ".svg"
-            svgFile = open("./GeneratedNFTs/"+filename, "w")
+            dirname = os.path.dirname(__file__)
+            svgFile = open(dirname+ "/GeneratedNFTs/"+filename, "w")
 
             header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
             back = '<rect width="100%" height="100%" fill="'+background+'"/>'
