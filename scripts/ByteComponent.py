@@ -6,6 +6,7 @@ class ByteComponent:
     bounds = []
     length = 0
     color = 0
+    end = False
 
     def __init__(self, topY, rightX, bottomY, leftX):
         self.bounds = [topY, rightX, bottomY, leftX]

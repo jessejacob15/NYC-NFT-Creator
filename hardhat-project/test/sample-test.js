@@ -1,5 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const fs = require('fs');
+const path = require('path');
 
 
 let accounts;
@@ -50,11 +52,14 @@ describe("Greeter", function () {
                                             '#697377', '#343427', '#788fb0', '#8592a1', '#60584b', '#2a2409', 
                                                     '#221000', '#21333e', '#483a22', '#5d6f6f']);
     
-    const head = ethers.utils.toUtf8Bytes('');
-    const head0 = ethers.utils.toUtf8Bytes('');
-    console.log(head0);
+    // const head = ethers.utils.toUtf8Bytes('');
+    // const head0 = ethers.utils.toUtf8Bytes('');
+    // console.log(head0);
+    var text = fs.readFileSync("/Users/jessejacob/Documents/projects/NYC-NFT-Creator/bytesCode.txt",'utf8')
+    const bytes = ethers.utils.toUtf8Bytes(text);
+    
+    await nounsDescriptor.addHead(bytes);
 
-    await nounsDescriptor.addHead(0x0015171f090e120e120e120e12021201000b12021201000b12021201000b12021201000b12021201000b12021201000b12021201000b12);
 
 
 
@@ -68,3 +73,5 @@ describe("Greeter", function () {
     // expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
 });
+
+
