@@ -1,6 +1,6 @@
 from copy import copy
 from fileinput import filename
-from pickle import FALSE, TRUE
+from xxlimited import new
 import image as image
 import matplotlib
 from pyparsing import col
@@ -9,7 +9,7 @@ from PaletteGenerator import PaletteGenerator
 
 class imgToSvg:
     byteComponents = []
-    colors = []
+    colors = ['#00000000']
     colorsRGB = []
     bounds = [0,0,0,0] # TopY, RightX, BottomY, LeftX
     redPixel = image.Pixel(255, 0, 0)
@@ -24,6 +24,7 @@ class imgToSvg:
         """
         myImg = img.copy() # create copy to manipulate
         for y in range(self.bounds[0],(self.bounds[2]),20): # iterate through all (x, y) pixel pairs
+            imgStart = False
             endX = self.getEndX(img, y)
             for x in range(self.bounds[3],(self.bounds[1]),20):
                 pixel = img.getPixel(x, y)
@@ -31,22 +32,29 @@ class imgToSvg:
                 green = pixel.getGreen()
                 blue = pixel.getBlue()
                 pixelRGB = [red, green, blue]
-                finalRGB = self.colorGrouping(pixelRGB)
-                color = '#%02x%02x%02x' % (finalRGB[0], finalRGB[1], finalRGB[2])
-                if color not in self.colors:
-                    self.colors.append(color)
-                newByte = ByteComponent(y, x+20, y+20, x)
-                newByte.setColor(self.colors.index(color))
-                newByte.setLength(1)
-
-                self.byteComponents.append(newByte)
-                newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
-                for i in range(x, x+20):
-                        for j in range(y, y + 20):
-                            myImg.setPixel(i, j, newPixel)
-
-            self.byteComponents[-1].end = True
-        myImg.save("generatedImages/smooth")          
+                color = '#%02x%02x%02x' % (red, green, blue)
+                if (color != '#000000' and not imgStart) or (imgStart and x <= endX):
+                    finalRGB = self.colorGrouping(pixelRGB)
+                    color = '#%02x%02x%02x' % (finalRGB[0], finalRGB[1], finalRGB[2])
+                    if color not in self.colors:
+                        self.colors.append(color)
+                    newByte = ByteComponent(y, x+20, y+20, x)
+                    newByte.setColor(self.colors.index(color))
+                    newByte.setLength(1)
+                    self.byteComponents.append(newByte)
+                    newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
+                    imgStart = True
+                else:
+                    newByte = ByteComponent(y,x+20,y+20,x)
+                    color = '#00000000'
+                    if color not in self.colors:
+                        self.colors.append(color)
+                    newByte.setColor(self.colors.index(color))
+                    newByte.setLength(1)
+                    self.byteComponents.append(newByte)
+                    
+                    
+        
 
     def colorGrouping(self,pixelRGB):
         pixelRed = pixelRGB[0]
@@ -84,7 +92,7 @@ class imgToSvg:
                     for i in range(x, x+20):
                         for j in range(y, y + 20):
                             copyImg.setPixel(i, j, self.redPixel)
-                    copyImg.save("generatedImages/withred")
+                    # copyImg.save("generatedImages/withred")
                     return y
 
     def getLeftX(self, img, copyImg):
@@ -101,7 +109,7 @@ class imgToSvg:
                     for i in range(x, x+20):
                         for j in range(y, y + 20):
                             copyImg.setPixel(i, j, self.redPixel)
-                    copyImg.save("generatedImages/withred")            
+                    # copyImg.save("generatedImages/withred")            
                     return x
 
     def getBottomY(self, img, copyImg):
@@ -118,12 +126,13 @@ class imgToSvg:
                     for i in range(x, x+20):
                         for j in range(y, y -20,-1):
                             copyImg.setPixel(i, j, self.redPixel)
-                    copyImg.save("generatedImages/withred")
+                    # copyImg.save("generatedImages/withred")
                     return y     
     
     def getEndX(self, img, y):
         w = img.getWidth()
-        for x in range(w-1):
+        h = img.getHeight()
+        for x in range(w-1,0,-1):
             pixel = img.getPixel(x, y)
             red = pixel.getRed()
             green = pixel.getGreen()
@@ -146,7 +155,7 @@ class imgToSvg:
                     for i in range(x, x-20, -1):
                         for j in range(y, y + 20):
                             copyImg.setPixel(i, j, self.redPixel)
-                    copyImg.save("generatedImages/withred")
+                    # copyImg.save("generatedImages/withred")
                     return x      
 
     def buildBytes(self):

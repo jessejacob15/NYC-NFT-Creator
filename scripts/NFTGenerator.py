@@ -25,7 +25,7 @@ def main():
 
     imgToSVG = imgToSvg()
 
-    imgToSVG.convertImageToSVG("head.png")
+    imgToSVG.convertImageToSVG("masterchief.png")
     head1 = imgToSVG.byteComponents
     print(imgToSVG.bounds)
     strRLE = imgToSVG.toRLE()
@@ -43,42 +43,42 @@ def main():
         genPalette = paletteGenerator.generateNewPalette(palette)
         seeder.addHeadPalette(genPalette)
 
-    # imgToSVG = imgToSvg()
+    imgToSVG = imgToSvg()
     
-    # imgToSVG.convertImageToSVG("skin.png")
-    # skin1 = imgToSVG.byteComponents
-    # print("skin:"+str(len(skin1)))
-    # skinColors = imgToSVG.colors
-    # seeder.addSkin(skin1)
-    # print(str(len(seeder.skins)))
-    # seeder.addSkinPalette(skinColors)
-    # paletteGenerator = PaletteGenerator(skin1)
-    # paletteGenerator.parsePalette()
-    # newPalettes = (["#964B00"], ["#BF40BF"])
-    # for palette in newPalettes:
-    #     paletteGenerator.decodeGradient(skinColors, len(palette))
-    #     genPalette = paletteGenerator.generateNewPalette(palette)
-    #     seeder.addSkinPalette(genPalette)
+    imgToSVG.convertImageToSVG("skin.png")
+    skin1 = imgToSVG.byteComponents
+    print("skin:"+str(len(skin1)))
+    skinColors = imgToSVG.colors
+    seeder.addSkin(skin1)
+    print(str(len(seeder.skins)))
+    seeder.addSkinPalette(skinColors)
+    paletteGenerator = PaletteGenerator(skin1)
+    paletteGenerator.parsePalette()
+    newPalettes = (["#964B00"], ["#BF40BF"])
+    for palette in newPalettes:
+        paletteGenerator.decodeGradient(skinColors, len(palette))
+        genPalette = paletteGenerator.generateNewPalette(palette)
+        seeder.addSkinPalette(genPalette)
 
-    # imgToSVG = imgToSvg()
+    imgToSVG = imgToSvg()
 
-    # imgToSVG.convertImageToSVG("jacket.png")
-    # jacket1 = imgToSVG.byteComponents
-    # jacketColors = imgToSVG.colors
-    # seeder.addJacket(jacket1)
-    # seeder.addJacketPalette(jacketColors)
-    # paletteGenerator = PaletteGenerator(jacket1)
-    # paletteGenerator.parsePalette()
-    # newPalettes = (["#880808"], ["#a9a9a9"], ["#FBCEB1"])
-    # for palette in newPalettes:
-    #     paletteGenerator.decodeGradient(jacketColors, len(palette))
-    #     genPalette = paletteGenerator.generateNewPalette(palette)
-    #     seeder.addJacketPalette(genPalette)
+    imgToSVG.convertImageToSVG("jacket.png")
+    jacket1 = imgToSVG.byteComponents
+    jacketColors = imgToSVG.colors
+    seeder.addJacket(jacket1)
+    seeder.addJacketPalette(jacketColors)
+    paletteGenerator = PaletteGenerator(jacket1)
+    paletteGenerator.parsePalette()
+    newPalettes = (["#880808"], ["#a9a9a9"], ["#FBCEB1"])
+    for palette in newPalettes:
+        paletteGenerator.decodeGradient(jacketColors, len(palette))
+        genPalette = paletteGenerator.generateNewPalette(palette)
+        seeder.addJacketPalette(genPalette)
 
 
-    # seeder.addBackgroundColor("#ffcccb")
-    # seeder.addBackgroundColor("#ADD8E6")
-    # seeder.generateNFTImages(num)
+    seeder.addBackgroundColor("#ffcccb")
+    seeder.addBackgroundColor("#ADD8E6")
+    seeder.generateNFTImages(num)
 
 
 

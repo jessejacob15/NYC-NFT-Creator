@@ -71,11 +71,11 @@ class NFTSeeder:
             headRects = bytesToSvg(head, headPalette)
             skinRects = bytesToSvg(skin, skinPalette)
             jacketRects = bytesToSvg(jacket, jacketPalette)
-            for rect in headRects:
+            for rect in jacketRects:
                 svgFile.write(rect)
             for rect in skinRects:
                 svgFile.write(rect)
-            for rect in jacketRects:
+            for rect in headRects:
                 svgFile.write(rect)
             svgFile.write('</svg>')
 

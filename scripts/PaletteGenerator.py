@@ -42,8 +42,9 @@ class PaletteGenerator:
 
         #### map all hex colors to RGB
         for hexcolor in hexColorArray:
-            rgb = matplotlib.colors.to_rgb(hexcolor)
-            self.colorsRGB.append(rgb)
+            if hexcolor != '#00000000':
+                rgb = matplotlib.colors.to_rgb(hexcolor)
+                self.colorsRGB.append(rgb)
 
         #### Use clustering to find the numCols common colors
         kmeans = KMeans(n_clusters=numCols, random_state=0).fit(self.colorsRGB)
@@ -101,7 +102,7 @@ class PaletteGenerator:
                     newB = 0
                 generatedRGB.insert(key,[newR, newG, newB])
 
-            generatedHex = []
+            generatedHex = ['#00000000']
             for rgbColor in generatedRGB:
                 generatedHex.append(matplotlib.colors.to_hex(rgbColor))    
             return generatedHex
