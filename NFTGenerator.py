@@ -20,9 +20,13 @@ def main():
 
     seeder = NFTSeeder()
 
-    imgToSVG = imgToSvg()
+    imgToSVG = imgToSvg("head")
 
+<<<<<<< Updated upstream:NFTGenerator.py
     imgToSVG.convertImageToSVG("head.png")
+=======
+    imgToSVG.convertImageToSVG("helmet2.png")
+>>>>>>> Stashed changes:scripts/NFTGenerator.py
     head1 = imgToSVG.byteComponents
     print("head:"+str(len(head1)))
     headColors = imgToSVG.colors
@@ -36,7 +40,7 @@ def main():
         genPalette = paletteGenerator.generateNewPalette(palette)
         seeder.addHeadPalette(genPalette)
 
-    imgToSVG = imgToSvg()
+    imgToSVG = imgToSvg("skin")
     
     imgToSVG.convertImageToSVG("skin.png")
     skin1 = imgToSVG.byteComponents
@@ -53,7 +57,7 @@ def main():
         genPalette = paletteGenerator.generateNewPalette(palette)
         seeder.addSkinPalette(genPalette)
 
-    imgToSVG = imgToSvg()
+    imgToSVG = imgToSvg("body")
 
     imgToSVG.convertImageToSVG("jacket.png")
     jacket1 = imgToSVG.byteComponents

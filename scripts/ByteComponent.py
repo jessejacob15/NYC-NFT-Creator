@@ -15,6 +15,34 @@ class ByteComponent:
     
     def setColor(self, color):
         self.color = color
+
+    def getBottomY(self):
+        return self.bounds[2]
+    
+    def getTopY(self):
+        return self.bounds[0]
+
+    def getLeftX(self):
+        return self.bounds[3]
+
+    def getRightX(self):
+        return self.bounds[1]
+
+    def setBounds(self,ty,rx,by,lx):
+        self.bounds = [ty,rx,by,lx]
+    
+    def setTopY(self, ty):
+        self.bounds[0] = ty
+
+    def setBottomY(self, by):
+        self.bounds[2] = by
+
+    def setRightX(self, rx):
+        self.bounds[1] = rx
+
+    def setLeftX(self, lx):
+        self.bounds[3] = lx
+
     
     def toString(self):
         print("+++++++++++")
