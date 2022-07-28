@@ -29,9 +29,18 @@ def main():
     head1 = imgToSVG.byteComponents
     print(imgToSVG.bounds)
     strRLE = imgToSVG.toRLE()
-    strRLE = "0" +  "120" + "614" + "818" + "139" + strRLE
-    intRLE = strRLE.encode('utf-8')
-    print(intRLE.hex())
+    arr = bytearray()
+    arr.append(0)
+    arr.append(120)
+    arr.append(614)
+    arr.append(818)
+    arr.append(139)
+    print(arr)
+    #strRLE =  strRLE
+    print(Buffer)
+    #intRLE = strRLE.encode('utf-8')
+    #print(intRLE)
+    #print(intRLE.hex())
     headColors = imgToSVG.colors
     seeder.addHead(head1)
     seeder.addHeadPalette(headColors)

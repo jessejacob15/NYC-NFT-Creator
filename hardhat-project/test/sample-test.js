@@ -52,13 +52,15 @@ describe("Greeter", function () {
                                             '#697377', '#343427', '#788fb0', '#8592a1', '#60584b', '#2a2409', 
                                                     '#221000', '#21333e', '#483a22', '#5d6f6f']);
     
-    // const head = ethers.utils.toUtf8Bytes('');
-    // const head0 = ethers.utils.toUtf8Bytes('');
-    // console.log(head0);
+   
     var text = fs.readFileSync("/Users/jessejacob/Documents/projects/NYC-NFT-Creator/bytesCode.txt",'utf8')
-    const bytes = ethers.utils.toUtf8Bytes(text);
+    var final = ethers.utils.toUtf8Bytes(text)[0] + ethers.utils.toUtf8Bytes(text[1:4]) + ethers.utils.toUtf8Bytes(text[4:7]);
     
-    await nounsDescriptor.addHead(bytes);
+    const bytes = ethers.utils.toUtf8Bytes(text);
+    console.log(bytes[0])
+    
+    await nounsDescriptor.addHead(text);
+
 
 
 
