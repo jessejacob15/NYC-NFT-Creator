@@ -15,7 +15,36 @@ class imgToSvg:
     redPixel = image.Pixel(255, 0, 0)
     endY=[]
     pixelMult = 20
+    compType = "head"
 
+    def __init__(self, cType):
+            self.compType = cType
+            
+    def repositionBytes(self):
+        repositionedByteComps = []
+        print("Repositioning Head")
+        if(self.compType == "head"):
+            ###Get the bounds for the template head
+            tempBounds = [120,614,818,139]
+
+            ###Get the bottom Y for the bound
+            tempBottomY = tempBounds[2]
+
+            ### Get current bottom Y
+            currBottomY = self.bounds[2]
+
+            for byte in self.byteComponents:
+                ###Get Difference from Bottom Y Bound
+                currDiffY = currBottomY - byte.getBottomY()
+
+                ##Get the difference between the template Bottom and the current bottom
+                adjustBottomY = tempBottomY - currBottomY
+
+                newBottomY = adjustBottomY - currDiffY
+
+                byte.setTopY(newBottomY-self.pixelMult)
+                byte.setBottomY(newBottomY)              
+        
 
     def parseImg(self,img):
         """ (Image object) -> Image object
@@ -52,9 +81,10 @@ class imgToSvg:
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
                     self.byteComponents.append(newByte)
+        self.repositionBytes()
+
                     
-                    
-        
+    
 
     def colorGrouping(self,pixelRGB):
         pixelRed = pixelRGB[0]
