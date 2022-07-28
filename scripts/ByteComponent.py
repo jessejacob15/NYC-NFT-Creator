@@ -30,4 +30,4 @@ class ByteComponent:
         xval = self.bounds[3]
         yval = self.bounds[0]
         hexcolor = hexColors[self.color]
-        return '<rect width="'+ str(width)+'" height= "' + str(height) +'"  x="' + str(yval)+ '" y="'+ str(xval)+ '" fill="'+ str(hexcolor) +'" />'
+        return '<rect width="'+ str(width)+'" height= "' + str(height) +'"  x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(hexcolor) +'" />'
