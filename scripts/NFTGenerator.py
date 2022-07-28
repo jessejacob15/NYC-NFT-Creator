@@ -22,11 +22,7 @@ def main():
 
     imgToSVG = imgToSvg("head")
 
-<<<<<<< Updated upstream:NFTGenerator.py
     imgToSVG.convertImageToSVG("head.png")
-=======
-    imgToSVG.convertImageToSVG("helmet2.png")
->>>>>>> Stashed changes:scripts/NFTGenerator.py
     head1 = imgToSVG.byteComponents
     print("head:"+str(len(head1)))
     headColors = imgToSVG.colors
