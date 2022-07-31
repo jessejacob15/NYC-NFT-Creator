@@ -21,11 +21,15 @@ class imgToSvg:
             self.compType = cType
             
     def repositionBytes(self):
-        repositionedByteComps = []
         print("Repositioning Head")
         if(self.compType == "head"):
             ###Get the bounds for the template head
+            print(self.bounds)
             tempBounds = [120,614,818,139]
+
+            ###Get the Middle Coord
+            tempMiddleY = tempBounds[2] - tempBounds[0]
+            tempMiddleX = tempBounds[1] - tempBounds[3]
 
             ###Get the bottom Y for the bound
             tempBottomY = tempBounds[2]
@@ -33,8 +37,17 @@ class imgToSvg:
             ### Get current bottom Y
             currBottomY = self.bounds[2]
 
+            ###Get current Middle Coord
+            currMiddleY = self.bounds[2] - self.bounds[0]
+            currMiddleX = self.bounds[1] - self.bounds[3]
+
+            ###Get difference in middle coord
+            diffX = tempMiddleX - currMiddleX
+            diffY = tempMiddleY - currMiddleY 
+
             for byte in self.byteComponents:
                 ###Get Difference from Bottom Y Bound
+                print("Before:" + str(byte.bounds))
                 currDiffY = currBottomY - byte.getBottomY()
 
                 ##Get the difference between the template Bottom and the current bottom
@@ -42,9 +55,16 @@ class imgToSvg:
 
                 newBottomY = adjustBottomY - currDiffY
 
-                byte.setTopY(newBottomY-self.pixelMult)
-                byte.setBottomY(newBottomY)              
-        
+                ###Get the new X and Y
+                newX = byte.bounds[3] + diffX
+                newY = byte.bounds[0] + diffY
+
+                byte.setBottomY(newY+self.pixelMult)
+                byte.setTopY(newY)
+                byte.setLeftX(newX)
+                byte.setRightX(newX + self.pixelMult)  
+                print("After:" + str(byte.bounds))
+
 
     def parseImg(self,img):
         """ (Image object) -> Image object

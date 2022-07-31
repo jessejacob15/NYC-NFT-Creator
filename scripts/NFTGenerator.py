@@ -23,9 +23,9 @@ def main():
 
     seeder = NFTSeeder()
 
-    imgToSVG = imgToSvg("header")
+    imgToSVG = imgToSvg("head")
 
-    imgToSVG.convertImageToSVG("head.png")
+    imgToSVG.convertImageToSVG("raffi.png")
     head1 = imgToSVG.byteComponents
     print(imgToSVG.bounds)
     strRLE = imgToSVG.toRLE()
@@ -34,12 +34,12 @@ def main():
     print(intRLE.hex())
     headColors = imgToSVG.colors
     seeder.addHead(head1)
-    # seeder.addHeadPalette(headColors)
+    seeder.addHeadPalette(headColors)
     paletteGenerator = PaletteGenerator(head1)
     paletteGenerator.parsePalette()
     # newPalettes = [["#E6067B"], ["#008000"], ["#FFD700"]]
-    # newPalettes = []
-    newPalettes = [["#FFD700"]]
+    newPalettes = []
+    # newPalettes = [["#FFD700"]]
 
 
     for palette in newPalettes:
