@@ -1,6 +1,9 @@
 from copy import copy
 from fileinput import filename
+from select import select
 from xxlimited import new
+
+from sklearn.feature_selection import SelectFdr
 import image as image
 import matplotlib
 from pyparsing import col
@@ -10,6 +13,7 @@ from PaletteGenerator import PaletteGenerator
 class imgToSvg:
     byteComponents = []
     colors = ['#00000000']
+    columnStartRows = {}
     colorsRGB = []
     bounds = [0,0,0,0] # TopY, RightX, BottomY, LeftX
     redPixel = image.Pixel(255, 0, 0)
@@ -22,6 +26,9 @@ class imgToSvg:
             
     def repositionBytes(self):
         print("Repositioning Head")
+        print(str(self.byteComponents[len(self.byteComponents)-1].getRightX()))
+        print(str(self.byteComponents[len(self.byteComponents)-1].getBottomY()))
+
         if(self.compType == "head"):
             ###Get the bounds for the template head
             print(self.bounds)
@@ -31,8 +38,14 @@ class imgToSvg:
             tempMiddleY = tempBounds[2] - tempBounds[0]
             tempMiddleX = tempBounds[1] - tempBounds[3]
 
+            tempBottomRight = 619
+
+            print("Temp Middle: "+ str(tempMiddleX))
+
             ###Get the bottom Y for the bound
             tempBottomY = tempBounds[2]
+
+            tempLeftX = tempBounds[3]
 
             ### Get current bottom Y
             currBottomY = self.bounds[2]
@@ -41,19 +54,29 @@ class imgToSvg:
             currMiddleY = self.bounds[2] - self.bounds[0]
             currMiddleX = self.bounds[1] - self.bounds[3]
 
+            currLeftX = self.bounds[3]
+
+            currBottomRight = self.byteComponents[len(self.byteComponents)-1].getRightX()
+
+            print("Curr Bottom Right: "+ str(currBottomRight))
+
+
             ###Get difference in middle coord
-            diffX = tempMiddleX - currMiddleX
-            diffY = tempMiddleY - currMiddleY 
+            
+            diffX = tempBottomRight - currBottomRight
+            diffY = tempBottomY - currBottomY
+
+            print("Diff: "+str(diffX))
 
             for byte in self.byteComponents:
                 ###Get Difference from Bottom Y Bound
-                print("Before:" + str(byte.bounds))
+                # print("Before:" + str(byte.bounds))
                 currDiffY = currBottomY - byte.getBottomY()
 
                 ##Get the difference between the template Bottom and the current bottom
-                adjustBottomY = tempBottomY - currBottomY
+                # adjustBottomY = tempBottomY - currBottomY
 
-                newBottomY = adjustBottomY - currDiffY
+                # newBottomY = adjustBottomY - currDiffY
 
                 ###Get the new X and Y
                 newX = byte.bounds[3] + diffX
@@ -63,7 +86,7 @@ class imgToSvg:
                 byte.setTopY(newY)
                 byte.setLeftX(newX)
                 byte.setRightX(newX + self.pixelMult)  
-                print("After:" + str(byte.bounds))
+                # print("After:" + str(byte.bounds))
 
 
     def parseImg(self,img):
@@ -76,13 +99,14 @@ class imgToSvg:
             imgStart = False
             endX = self.getEndX(img, y)
             for x in range(self.bounds[3],(self.bounds[1]),20):
+                startY = self.getStartY(img, x)
                 pixel = img.getPixel(x, y)
                 red = pixel.getRed()
                 green = pixel.getGreen()
                 blue = pixel.getBlue()
                 pixelRGB = [red, green, blue]
                 color = '#%02x%02x%02x' % (red, green, blue)
-                if (color != '#000000' and not imgStart) or (imgStart and x <= endX):
+                if (color != '#000000' and not imgStart) or (imgStart and x <= endX and y >= startY):
                     finalRGB = self.colorGrouping(pixelRGB)
                     color = '#%02x%02x%02x' % (finalRGB[0], finalRGB[1], finalRGB[2])
                     if color not in self.colors:
@@ -120,6 +144,21 @@ class imgToSvg:
             
         self.colorsRGB.append(pixelRGB)
         return pixelRGB
+    
+
+    def getStartY(self,img,x):
+        for y in range(self.bounds[0],self.bounds[2]):
+            pixel = img.getPixel(x, y)
+            red = pixel.getRed()
+            green = pixel.getGreen()
+            blue = pixel.getBlue()
+            color = '#%02x%02x%02x' % (red, green, blue)
+            if color != '#000000':
+                return y
+        
+        return self.bounds[2]
+
+
             
     def getBoundary(self, img, copyImg):
         self.bounds[0] = self.getTopY(img, copyImg)

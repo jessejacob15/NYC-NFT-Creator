@@ -24,7 +24,7 @@ class ByteComponent:
         self.bounds[0] = coord
 
     def setLeftX(self,coord):
-            self.bounds[3] = coord
+        self.bounds[3] = coord
     
     def setRightX(self,coord):
         self.bounds[1] = coord
