@@ -1,11 +1,14 @@
 from copy import copy
 from fileinput import filename
+from os import system
 from select import select
+from turtle import right
 from xxlimited import new
 
 from sklearn.feature_selection import SelectFdr
 import image as image
 import matplotlib
+import sys
 from pyparsing import col
 from ByteComponent import ByteComponent
 from PaletteGenerator import PaletteGenerator
@@ -68,6 +71,11 @@ class imgToSvg:
 
             print("Diff: "+str(diffX))
 
+            topY = sys.maxsize
+            rightX = 0
+            bottomY = 0
+            leftX = sys.maxsize
+            
             for byte in self.byteComponents:
                 ###Get Difference from Bottom Y Bound
                 # print("Before:" + str(byte.bounds))
@@ -86,7 +94,21 @@ class imgToSvg:
                 byte.setTopY(newY)
                 byte.setLeftX(newX)
                 byte.setRightX(newX + self.pixelMult)  
-                # print("After:" + str(byte.bounds))
+
+                if byte.getBottomY()>= bottomY:
+                    bottomY = byte.getBottomY()
+                
+                if byte.getLeftX() <= leftX:
+                    leftX = byte.getLeftX()
+
+                if byte.getTopY() <= topY:
+                    topY = byte.getTopY()
+
+                if byte.getRightX() >= rightX:
+                    rightX = byte.getRightX()
+
+            self.bounds = [topY,rightX,bottomY,leftX]
+            print("New Bounds: "+str(self.bounds))
 
 
     def parseImg(self,img):
@@ -253,6 +275,7 @@ class imgToSvg:
             componentsToBytes.append(component.length)
             componentsToBytes.append(component.color)
         return bytes(componentsToBytes)
+        
 
     def printBytes(self):
         colorsByBytes = ""
@@ -277,10 +300,22 @@ class imgToSvg:
         return rows
     
     def toRLE(self):
+        filename = "RLEnft" + self.compType+".svg"
+        svgFile = open(filename, "w")
+        height = abs(self.bounds[0]-self.bounds[2])
+        width = abs(self.bounds[3]-self.bounds[1])
+        header = '<svg width="'+str(width)+'" height="'+str(height)+'" viewbox ="'+str(self.bounds[3])+' '+str(self.bounds[0])+' '+str(width)+' ' +str(height)+'" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
+        svgFile.write(header)
+
         strRLE = ""
         fileRLE = ""
         rows = self.colorsInRows()
+        yval = self.bounds[2]
+
+        finalRLE = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]
+
         for row in rows:
+            xval = self.bounds[1]
             prev = row[0]
             currLen = 1
             for i in range(1, len(row)):
@@ -290,15 +325,26 @@ class imgToSvg:
                 else:
                     fileRLE += str(currLen) + "|" + str(prev) + " "
                     strRLE += str(currLen) + str(prev)
+                    newRect = '<rect width="'+ str(20* currLen)+'" height= "' + str(20) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[prev]) +'"/>'
+                    svgFile.write(newRect)
+                    
+                    finalRLE.append(currLen)
+                    finalRLE.append(prev)
+
                     currLen = 1             
                 if (i == len(row) - 1):
                     fileRLE += str(currLen) + "|" + str(curr) + '\n'
                     strRLE += str(currLen) +  str(curr)
                 prev = curr
-            
-        f = open("RLE-rows.txt", "w")
+                xval += 20
+            yval += 20
+
+        svgFile.write('</svg>') 
+        f = open("RLE"+self.compType+"-rows.txt", "w")
         f.write(fileRLE)
         f.close()
+        print(finalRLE)
+        print("___________")
         return strRLE
             
 
