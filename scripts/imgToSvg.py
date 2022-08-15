@@ -136,6 +136,8 @@ class imgToSvg:
                     newByte = ByteComponent(y, x+20, y+20, x)
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
+                    if x == endX:
+                        newByte.end = True
                     self.byteComponents.append(newByte)
                     newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
                     imgStart = True
@@ -146,6 +148,8 @@ class imgToSvg:
                         self.colors.append(color)
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
+                    if x == endX:
+                        newByte.end = True
                     self.byteComponents.append(newByte)
         self.repositionBytes()
 
@@ -250,7 +254,8 @@ class imgToSvg:
             blue = pixel.getBlue()
             color = '#%02x%02x%02x' % (red, green, blue)
             if color != '#000000':
-                return x   
+                return x 
+        return self.bounds[1]  
 
     def getRightX(self, img, copyImg):
         w = img.getWidth()
@@ -275,7 +280,7 @@ class imgToSvg:
             componentsToBytes.append(component.length)
             componentsToBytes.append(component.color)
         return bytes(componentsToBytes)
-        
+
 
     def printBytes(self):
         colorsByBytes = ""
@@ -310,6 +315,7 @@ class imgToSvg:
         strRLE = ""
         fileRLE = ""
         rows = self.colorsInRows()
+        print(rows)
         yval = self.bounds[2]
 
         finalRLE = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]

@@ -25,7 +25,7 @@ def main():
 
     imgToSVG = imgToSvg("head")
 
-    imgToSVG.convertImageToSVG("raffi.png")
+    imgToSVG.convertImageToSVG("boba.png")
     head1 = imgToSVG.byteComponents
     print(imgToSVG.bounds)
     strRLE = imgToSVG.toRLE()
