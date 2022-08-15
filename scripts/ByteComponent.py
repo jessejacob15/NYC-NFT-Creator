@@ -56,3 +56,14 @@ class ByteComponent:
         yval = self.bounds[0]
         hexcolor = hexColors[self.color]
         return '<rect width="'+ str(width)+'" height= "' + str(height) +'"  x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(hexcolor) +'" />'
+
+    def toSVGDict(self):
+        myDict = {}
+        myDict["width"] = abs(self.bounds[1]-self.bounds[3]) 
+        myDict["height"] = abs(self.bounds[0] - self.bounds[2])
+        myDict["xval"] = self.bounds[3]
+        myDict["yval"] = self.bounds[0]
+        myDict["end"] = self.end
+        myDict["hexColor"] = self.color
+
+        return myDict

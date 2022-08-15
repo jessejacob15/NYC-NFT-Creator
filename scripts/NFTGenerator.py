@@ -8,7 +8,7 @@ from ByteComponent import ByteComponent
 from PaletteGenerator import PaletteGenerator
 from NFTSeeder import NFTSeeder
 from imgToSvg import imgToSvg
-import codecs
+
 
 
 
@@ -25,7 +25,7 @@ def main():
 
     imgToSVG = imgToSvg("head")
 
-    imgToSVG.convertImageToSVG("boba.png")
+    imgToSVG.convertImageToSVG("head.png")
     head1 = imgToSVG.byteComponents
     print(imgToSVG.bounds)
     strRLE = imgToSVG.toRLE()
@@ -65,7 +65,6 @@ def main():
         seeder.addSkinPalette(genPalette)
 
     imgToSVG = imgToSvg("body")
-
     imgToSVG.convertImageToSVG("jacket.png")
     jacket1 = imgToSVG.byteComponents
     jacketColors = imgToSVG.colors

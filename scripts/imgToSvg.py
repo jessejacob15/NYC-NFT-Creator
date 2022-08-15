@@ -120,6 +120,7 @@ class imgToSvg:
         for y in range(self.bounds[0],(self.bounds[2]),20): # iterate through all (x, y) pixel pairs
             imgStart = False
             endX = self.getEndX(img, y)
+            print("End X: "+ str(endX))
             for x in range(self.bounds[3],(self.bounds[1]),20):
                 startY = self.getStartY(img, x)
                 pixel = img.getPixel(x, y)
@@ -136,8 +137,6 @@ class imgToSvg:
                     newByte = ByteComponent(y, x+20, y+20, x)
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
-                    if x == endX:
-                        newByte.end = True
                     self.byteComponents.append(newByte)
                     newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
                     imgStart = True
@@ -148,9 +147,9 @@ class imgToSvg:
                         self.colors.append(color)
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
-                    if x == endX:
-                        newByte.end = True
                     self.byteComponents.append(newByte)
+                lastByte = self.byteComponents[len(self.byteComponents)-1]
+            lastByte.end = True
         self.repositionBytes()
 
                     
@@ -302,6 +301,7 @@ class imgToSvg:
             if (byte.end):
                 rows.append(currRow)
                 currRow = []
+        print("Rows: "+str(len(rows)))
         return rows
     
     def toRLE(self):
@@ -315,16 +315,16 @@ class imgToSvg:
         strRLE = ""
         fileRLE = ""
         rows = self.colorsInRows()
-        print(rows)
-        yval = self.bounds[2]
+        yval = self.bounds[0]
 
         finalRLE = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]
 
         for row in rows:
-            xval = self.bounds[1]
+            print(row)
+            xval = self.bounds[3]
             prev = row[0]
             currLen = 1
-            for i in range(1, len(row)):
+            for i in range(0, len(row)):
                 curr = row[i]
                 if prev == curr:
                     currLen += 1
@@ -342,7 +342,7 @@ class imgToSvg:
                     fileRLE += str(currLen) + "|" + str(curr) + '\n'
                     strRLE += str(currLen) +  str(curr)
                 prev = curr
-                xval += 20
+                xval +=  20
             yval += 20
 
         svgFile.write('</svg>') 
@@ -352,9 +352,69 @@ class imgToSvg:
         print(finalRLE)
         print("___________")
         return strRLE
+
+
+    def bytesToRects(self):
+        rects = []
+        currLen = 1
+        prevColor = -1
+        for byte in self.byteComponents:
+            #rects.append(byte.toSVG(palette))
+            rects.append(byte.toSVGDict())
             
+            # currColor = byte.color
+            # currX = byte.bounds[3]
+            # currY = byte.bounds[0]
+            # if (currColor == prevColor):
+            #     print("same color")
+            #     currLen += 1
+            # else:
+            #     rects.append('<rect width="'+ str(20 * currLen)+'" height= "' + str(20) +'"  x="' + str(currX - ((currLen - 1) * 20))+ '" y="'+ str(currY)+ '" fill="'+ str(palette[byte.color]) +'" />')
+            #     currLen = 1
+            # prevColor = currColor
 
+        rects = self.toRLE(rects)
+        print("numRects = ", str(len(rects)))
+        return rects
 
+    def toRLERects(self,rects):
+        currColor = ""
+        currLen = 1
+        startX = self.bounds[3]
+        currX = startX
+        currY = rects[0]["yval"]
+        arrayItems = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]
+        
+        finalRects = []
+    
+
+        for rect in rects:
+            currY = rect["yval"]
+
+            if (rect["end"] == True):
+                arrayItems.append(currLen + 1)
+                arrayItems.append(currColor)
+                currLen = 0
+                currColor = rect["hexColor"]
+                currX = startX
+
+            
+            elif rect["hexColor"] == currColor and rect["yval"] == currY:
+                currLen += 1
+            
+            else:
+                if currColor != '':
+                    arrayItems.append(currLen)
+                    arrayItems.append(currColor)
+
+                currColor = rect["hexColor"]
+                currX = 20* currLen
+                currLen = 1
+        f = open("RLE"+self.compType+"-rows.txt", "w")
+        f.write(arrayItems)
+        f.close()
+        return finalRects[1:]
+            
 
     def bytesToSvg(self, bytes, palette, name):
         filename = str(name) + ".svg"
@@ -373,8 +433,7 @@ class imgToSvg:
         copyImg = myImg.copy()
         self.getBoundary(myImg, copyImg)
         self.parseImg(myImg)
-        
-        self.toRLE()
+
         # print("bounds: ", self.bounds)
         # print("ammmount of rects: ", len(self.byteComponents))
         # print("ammount of colorsHEX:", len(self.colors))
