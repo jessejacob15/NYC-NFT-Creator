@@ -29,7 +29,14 @@ def main():
     imgToSVG = imgToSvg(str(compType))
     
     imgToSVG.convertImageToSVG(imageFile)
-    imgToSVG.convertImageToRLE()
+    strRLE = imgToSVG.convertImageToRLE()
+    strRLE = "0" +  str(imgToSVG.bounds[0]) +str(imgToSVG.bounds[1]) + str(imgToSVG.bounds[2]) + str(imgToSVG.bounds[3]) + strRLE
+    intRLE = strRLE.encode('utf-8')
+
+    filename = "RLE_" + compType+"_Encoded.txt"
+    compEncode = open(filename, "w")
+    compEncode.write(intRLE.hex())
+    compEncode.close()
 
     compBytes = imgToSVG.byteComponents
 
