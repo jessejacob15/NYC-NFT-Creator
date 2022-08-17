@@ -1,33 +1,32 @@
-from copy import copy
-from fileinput import filename
-from turtle import color
-
-from numpy import append
-import image as image
-import random
-import sys
-from ByteComponent import ByteComponent
 from PaletteGenerator import PaletteGenerator
-from NFTSeeder import NFTSeeder
 from imgToSvg import imgToSvg
-
-
-
 
 def main():
 
     compTypes = ["head", "skin", "body"]
 
-    compType = sys.argv[1]
+    validCompInput = False
+    compType = ""
+    while validCompInput == False:
+        inputComponent = input("Please provide a component type [head, skin, body]: ")
+        if inputComponent in compTypes:
+            validCompInput = True
+            compType = inputComponent
 
-    if compType not in compTypes:
-        print("Please provide component type [head, skin, body]")
-        return
+    validFileInput = False
+    imageFile = ""
+    while validFileInput == False:
+        imageInputFile = input("Component Image File: ")
+        try: 
+            imageInputFile = "../" + compType + "s/" + imageInputFile
+            open(imageInputFile)
+            validFileInput = True
+            imageFile = imageInputFile
+        except FileNotFoundError:
+            print("Wrong file or file path")
 
-    imageFile = input("Component Image File: ")
 
     imgToSVG = imgToSvg(str(compType))
-    
     imgToSVG.convertImageToSVG(imageFile)
     strRLE = imgToSVG.convertImageToRLE()
     strRLE = "0" +  str(imgToSVG.bounds[0]) +str(imgToSVG.bounds[1]) + str(imgToSVG.bounds[2]) + str(imgToSVG.bounds[3]) + strRLE
@@ -41,7 +40,6 @@ def main():
     compBytes = imgToSVG.byteComponents
 
     defaultColors = imgToSVG.colors
-
 
     paletteGenerator = PaletteGenerator(compBytes)
     paletteGenerator.parsePalette()
@@ -69,9 +67,6 @@ def main():
         colorFile.write("\n")
     
     colorFile.close()
-
-
-
 
 if __name__ == "__main__":
     main()
