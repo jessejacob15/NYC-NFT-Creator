@@ -12,6 +12,8 @@ def main():
         if inputComponent in compTypes:
             validCompInput = True
             compType = inputComponent
+        else:
+            print("not a valid component type")
 
     validFileInput = False
     imageFile = ""
@@ -23,7 +25,7 @@ def main():
             validFileInput = True
             imageFile = imageInputFile
         except FileNotFoundError:
-            print("Wrong file or file path")
+            print("Cannot find file, try again")
 
 
     imgToSVG = imgToSvg(str(compType))
