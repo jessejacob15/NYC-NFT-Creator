@@ -37,8 +37,8 @@ def main():
     seeder.addHeadPalette(headColors)
     paletteGenerator = PaletteGenerator(head1)
     paletteGenerator.parsePalette()
-    # newPalettes = [["#E6067B"], ["#008000"], ["#FFD700"]]
-    newPalettes = []
+    newPalettes = [["#E6067B"], ["#008000"], ["#FFD700"]]
+    # newPalettes = []
     # newPalettes = [["#FFD700"]]
 
 

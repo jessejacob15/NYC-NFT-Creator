@@ -120,7 +120,6 @@ class imgToSvg:
         for y in range(self.bounds[0],(self.bounds[2]),20): # iterate through all (x, y) pixel pairs
             imgStart = False
             endX = self.getEndX(img, y)
-            print("End X: "+ str(endX))
             for x in range(self.bounds[3],(self.bounds[1]),20):
                 startY = self.getStartY(img, x)
                 pixel = img.getPixel(x, y)
@@ -148,7 +147,7 @@ class imgToSvg:
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
                     self.byteComponents.append(newByte)
-                lastByte = self.byteComponents[len(self.byteComponents)-1]
+            lastByte = self.byteComponents[len(self.byteComponents)-1]
             lastByte.end = True
         self.repositionBytes()
 
@@ -304,7 +303,7 @@ class imgToSvg:
         print("Rows: "+str(len(rows)))
         return rows
     
-    def toRLE(self):
+    def convertImageToRLE(self):
         filename = "RLEnft" + self.compType+".svg"
         svgFile = open(filename, "w")
         height = abs(self.bounds[0]-self.bounds[2])
@@ -320,7 +319,7 @@ class imgToSvg:
         finalRLE = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]
 
         for row in rows:
-            print(row)
+            # print(row)
             xval = self.bounds[3]
             prev = row[0]
             currLen = 1
@@ -336,13 +335,13 @@ class imgToSvg:
                     
                     finalRLE.append(currLen)
                     finalRLE.append(prev)
+                    xval += 20*currLen
+                    currLen = 1     
 
-                    currLen = 1             
                 if (i == len(row) - 1):
                     fileRLE += str(currLen) + "|" + str(curr) + '\n'
                     strRLE += str(currLen) +  str(curr)
                 prev = curr
-                xval +=  20
             yval += 20
 
         svgFile.write('</svg>') 
@@ -383,11 +382,8 @@ class imgToSvg:
         startX = self.bounds[3]
         currX = startX
         currY = rects[0]["yval"]
-        arrayItems = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]
-        
+        arrayItems = [self.bounds[0], self.bounds[1], self.bounds[2], self.bounds[3]]       
         finalRects = []
-    
-
         for rect in rects:
             currY = rect["yval"]
 
