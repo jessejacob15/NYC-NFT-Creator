@@ -147,7 +147,7 @@ class imgToSvg:
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
                     self.byteComponents.append(newByte)
-            lastByte = self.byteComponents[len(self.byteComponents)-1]
+            lastByte = self.byteComponents[-1]
             lastByte.end = True
         self.repositionBytes()
 
@@ -325,6 +325,8 @@ class imgToSvg:
             currLen = 1
             for i in range(0, len(row)):
                 curr = row[i]
+                if i == 0:
+                    continue
                 if prev == curr:
                     currLen += 1
                 else:
@@ -348,9 +350,9 @@ class imgToSvg:
         f = open("RLE"+self.compType+"-rows.txt", "w")
         f.write(fileRLE)
         f.close()
-        print(finalRLE)
+        # print(finalRLE)
         print("___________")
-        return strRLE
+        return finalRLE
 
 
     def bytesToRects(self):

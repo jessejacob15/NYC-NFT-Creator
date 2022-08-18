@@ -31,12 +31,12 @@ def main():
     imgToSVG = imgToSvg(str(compType))
     imgToSVG.convertImageToSVG(imageFile)
     strRLE = imgToSVG.convertImageToRLE()
-    strRLE = "0" +  str(imgToSVG.bounds[0]) +str(imgToSVG.bounds[1]) + str(imgToSVG.bounds[2]) + str(imgToSVG.bounds[3]) + strRLE
-    intRLE = strRLE.encode('utf-8')
+    # strRLE = "0" +  str(imgToSVG.bounds[0]) +str(imgToSVG.bounds[1]) + str(imgToSVG.bounds[2]) + str(imgToSVG.bounds[3]) + strRLE
+    # intRLE = strRLE.encode('utf-8')
 
-    filename = "RLE_" + compType+"_Encoded.txt"
+    filename = "RLE_" + compType+"_Array.txt"
     compEncode = open(filename, "w")
-    compEncode.write(intRLE.hex())
+    compEncode.write(str(strRLE))
     compEncode.close()
 
     compBytes = imgToSVG.byteComponents
