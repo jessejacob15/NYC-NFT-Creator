@@ -343,6 +343,8 @@ class imgToSvg:
                 if (i == len(row) - 1):
                     fileRLE += str(currLen) + "|" + str(curr) + '\n'
                     strRLE += str(currLen) +  str(curr)
+                    newRect = '<rect width="'+ str(20* currLen)+'" height= "' + str(20) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[curr]) +'"/>'
+                    svgFile.write(newRect)
                 prev = curr
             yval += 20
 
