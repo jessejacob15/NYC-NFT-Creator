@@ -27,19 +27,23 @@ def main():
 
     imgToSVG.convertImageToSVG("head.png")
     head1 = imgToSVG.byteComponents
-    print(imgToSVG.bounds)
-    strRLE = imgToSVG.toRLE()
-    strRLE = "0" +  "120" + "614" + "818" + "139" + strRLE
-    intRLE = strRLE.encode('utf-8')
-    print(intRLE.hex())
+    # print(imgToSVG.bounds)
+    # strRLE = imgToSVG.toRLE()
+    # strRLE = "0" +  "120" + "614" + "818" + "139" + strRLE
+    # intRLE = strRLE.encode('utf-8')
+    # print(intRLE.hex())
     headColors = imgToSVG.colors
     seeder.addHead(head1)
-    seeder.addHeadPalette(headColors)
+    # seeder.addHeadPalette(headColors)
     paletteGenerator = PaletteGenerator(head1)
     paletteGenerator.parsePalette()
-    newPalettes = [["#E6067B"], ["#008000"], ["#FFD700"]]
-    # newPalettes = []
-    # newPalettes = [["#FFD700"]]
+    # newPalettes = [["#ff1dce","#ff6fff", "#8b008b"]]
+    # newPalettes = [["#E6067B"], ["#008000"], ["#FFD700"]]
+    # newPalettes = [["#EE7600","#FF0000"]]
+    newPalettes = [["#4B0082"]]
+    # newPalettes = [["#FB6F90","#fdc7d4"]]
+    # newPalettes = [["#F6B45E"]]
+    # newPalettes = [["#50C878"]]
 
 
     for palette in newPalettes:
@@ -58,7 +62,9 @@ def main():
     seeder.addSkinPalette(skinColors)
     paletteGenerator = PaletteGenerator(skin1)
     paletteGenerator.parsePalette()
-    newPalettes = (["#964B00"], ["#BF40BF"])
+    # newPalettes = [["#9b7653"], ["#704214"]]
+    # newPalettes = [["#916643"]]
+    newPalettes =[]
     for palette in newPalettes:
         paletteGenerator.decodeGradient(skinColors, len(palette))
         genPalette = paletteGenerator.generateNewPalette(palette)
@@ -69,10 +75,13 @@ def main():
     jacket1 = imgToSVG.byteComponents
     jacketColors = imgToSVG.colors
     seeder.addJacket(jacket1)
-    seeder.addJacketPalette(jacketColors)
+    # seeder.addJacketPalette(jacketColors)
     paletteGenerator = PaletteGenerator(jacket1)
     paletteGenerator.parsePalette()
-    newPalettes = (["#880808"], ["#a9a9a9"], ["#FBCEB1"])
+    # newPalettes = (["#880808"], ["#a9a9a9"], ["#FBCEB1"],["#00FF00"])
+    # newPalettes = [["#432616"]]
+    # newPalettes = [["#ff4f00","#ff7518"]]
+    newPalettes=[["#36454F"]]
     for palette in newPalettes:
         paletteGenerator.decodeGradient(jacketColors, len(palette))
         genPalette = paletteGenerator.generateNewPalette(palette)

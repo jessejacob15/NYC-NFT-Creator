@@ -92,8 +92,8 @@ class imgToSvg:
 
                 byte.setBottomY(newY+self.pixelMult)
                 byte.setTopY(newY)
-                byte.setLeftX(newX)
-                byte.setRightX(newX + self.pixelMult)  
+                # byte.setLeftX(newX)
+                # byte.setRightX(newX + self.pixelMult)  
 
                 if byte.getBottomY()>= bottomY:
                     bottomY = byte.getBottomY()
@@ -108,6 +108,27 @@ class imgToSvg:
                     rightX = byte.getRightX()
 
             self.bounds = [topY,rightX,bottomY,leftX]
+            print("New Bounds: "+str(self.bounds))
+
+        if(self.compType == "body"):
+            ###Get the bounds for the template head
+            print(self.bounds)
+
+            ###Get the bottom Y for the bound
+            tempBottomY = 1000
+
+            ### Get current bottom Y
+            currBottomY = self.bounds[2]
+
+            diffY = tempBottomY - currBottomY
+            
+            for byte in self.byteComponents:
+
+                newY = byte.bounds[2] + diffY
+
+                byte.setBottomY(newY)
+                byte.setTopY(newY-self.pixelMult)
+
             print("New Bounds: "+str(self.bounds))
 
 
@@ -266,9 +287,9 @@ class imgToSvg:
                 blue = pixel.getBlue()
                 color = '#%02x%02x%02x' % (red, green, blue)
                 if color != '#000000':
-                    for i in range(x, x-20, -1):
-                        for j in range(y, y + 20):
-                            copyImg.setPixel(i, j, self.redPixel)
+                    # for i in range(x, x-20, -1):
+                    #     for j in range(y, y + 20):
+                    #         copyImg.setPixel(i, j, self.redPixel)
                     # copyImg.save("generatedImages/withred")
                     return x      
 
@@ -345,6 +366,8 @@ class imgToSvg:
                     strRLE += str(currLen) +  str(curr)
                     newRect = '<rect width="'+ str(20* currLen)+'" height= "' + str(20) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[curr]) +'"/>'
                     svgFile.write(newRect)
+                    finalRLE.append(currLen)
+                    finalRLE.append(curr)
                 prev = curr
             yval += 20
 

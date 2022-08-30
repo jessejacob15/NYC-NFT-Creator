@@ -64,20 +64,51 @@ class NFTSeeder:
             dirname = os.path.dirname(__file__)
             svgFile = open(dirname+ "/GeneratedNFTs/"+filename, "w")
 
-            header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
-            back = '<rect width="100%" height="100%" fill="'+background+'"/>'
+            header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"  style ="background: black">'
             svgFile.write(header)
-            svgFile.write(back)
             headRects = bytesToSvg(head, headPalette)
             skinRects = bytesToSvg(skin, skinPalette)
             jacketRects = bytesToSvg(jacket, jacketPalette)
-            for rect in jacketRects:
-                svgFile.write(rect)
             for rect in skinRects:
+                svgFile.write(rect)
+            for rect in jacketRects:
                 svgFile.write(rect)
             for rect in headRects:
                 svgFile.write(rect)
             svgFile.write('</svg>')
+
+            headFile = "head"+ str(i) + ".svg"
+            dirname = os.path.dirname(__file__)
+            svgFile = open(dirname+ "/Components/"+headFile, "w")
+            header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
+            svgFile.write(header)
+            for rect in headRects:
+                 svgFile.write(rect)
+            svgFile.write('</svg>')
+
+            bodyFile = "body" + str(i) + ".svg"
+            dirname = os.path.dirname(__file__)
+            svgFile = open(dirname+ "/Components/"+bodyFile, "w")
+            header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"  style ="background: black">'
+            svgFile.write(header)
+            for rect in skinRects:
+                    svgFile.write(rect)
+            for rect in jacketRects:
+                svgFile.write(rect)
+            svgFile.write('</svg>')
+
+            bodyFile = "skin" + str(i) + ".svg"
+            dirname = os.path.dirname(__file__)
+            svgFile = open(dirname+ "/Components/"+bodyFile, "w")
+            header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
+            svgFile.write(header)
+            for rect in skinRects:
+                    svgFile.write(rect)
+            svgFile.write('</svg>')
+
+
+
+
 
 
 
