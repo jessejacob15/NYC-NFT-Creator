@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 require('dotenv').config()
 
 async function writeSVG(seed) {
-    const header = '<svg width="780" height="1300" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">\n'
+    const header = '<svg width="780" height="1040" viewbox ="0,0,780,1040" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">\n<rect width = "780" height = "1040" fill = "#000000"/>'
     const filename = "./imageSVG.svg"
     //const filename = path.normalize(__dirname + "/svgText.svg")
     let finalURL = ""

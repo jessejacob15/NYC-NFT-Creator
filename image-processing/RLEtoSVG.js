@@ -9,16 +9,16 @@ const pinata = pinataSDK(process.env.PINATA_KEY, process.env.PINATA_SECRET_KEY);
 
 
 async function writeSVG(seed) {
-    const header = '<svg width="780" height="1300" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">\n'
+    const header = '<svg width="780" height="1040" viewbox ="0,0,780,1040" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">\n<rect width = "780" height = "1040" fill = "#000000"/>'
     const filename = path.normalize(__dirname + "/SVG-files/imageSVG.svg")
     fs.appendFileSync(filename, header, (err) => {
         if (err) {
           console.log(err);
         }
     });
-    createRects(seed.skin, seed.skinPalette, filename)
- //   createRects(seed.jacket, seed.jacketPalette, filename)
-   // createRects(seed.head, seed.headPalette, filename)
+ //   createRects(seed.skin, seed.skinPalette, filename)
+    createRects(seed.jacket, seed.jacketPalette, filename)
+ //   createRects(seed.head, seed.headPalette, filename)
     fs.appendFileSync(filename, "</svg>", (err) => {
         if (err) {
           console.log(err);
