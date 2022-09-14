@@ -16,13 +16,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-@font-face {
-  font-family: 'MyFont';
-  src: local('MyFont'), url(./fonts/VCR_OSD_MONO.ttf) format('truetype');
-}
-/* 
-@font-face {
-  font-family: 'mincraft';
-  src: local('MyFont'), url(./fonts/Minecraft.ttf) format('ttf');
-} */

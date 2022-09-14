@@ -158,7 +158,7 @@ const App = () => {
           <img alt = "nameless-logo" src = {namelesslogo} />
           {/* <p className="header gradient-text">namelessyouthclub</p> */}
           <p className="sub-text">
-            Join the community.  
+            ideas unmaksed
           </p>
           {currentAccount === "" ? renderNotConnectedContainer() : renderMintUI()}
         </div>
@@ -169,7 +169,7 @@ const App = () => {
             href={TWITTER_LINK}
             target="_blank"
             rel="noreferrer"
-          >{`follow @${TWITTER_HANDLE}`}</a>
+          >{`@${TWITTER_HANDLE}`}</a>
         </div>
       </div>
     </div>
