@@ -345,6 +345,8 @@ class imgToSvg:
                     strRLE += str(currLen) +  str(curr)
                     newRect = '<rect width="'+ str(20* currLen)+'" height= "' + str(20) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[curr]) +'"/>'
                     svgFile.write(newRect)
+                    finalRLE.append(currLen)
+                    finalRLE.append(curr)
                 prev = curr
             yval += 20
 

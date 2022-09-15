@@ -13,20 +13,20 @@ async function writeSVG(seed) {
     const filename = path.normalize(__dirname + "/SVG-files/imageSVG.svg")
     fs.appendFileSync(filename, header, (err) => {
         if (err) {
-          console.log(err);
+            console.log(err);
         }
     });
- //   createRects(seed.skin, seed.skinPalette, filename)
-    createRects(seed.jacket, seed.jacketPalette, filename)
- //   createRects(seed.head, seed.headPalette, filename)
+    createRects(seed.skin, seed.skinPalette, filename)
+    // createRects(seed.jacket, seed.jacketPalette, filename)
+    //   createRects(seed.head, seed.headPalette, filename)
     fs.appendFileSync(filename, "</svg>", (err) => {
         if (err) {
-          console.log(err);
+            console.log(err);
         }
     });
-   
+
     const finalURL = await uploadToPinata(filename)
-   // console.log(finalURL)
+    // console.log(finalURL)
     return finalURL
 }
 
@@ -35,7 +35,7 @@ async function uploadToPinata(filename) {
     await pinata.testAuthentication().then((result) => {
         //handle successful authentication here
         //console.log(result);
-       
+
     }).catch((err) => {
         //handle error here
         console.log(err);
@@ -56,7 +56,7 @@ async function uploadToPinata(filename) {
     };
     await pinata.pinFileToIPFS(readableStreamForFile, options).then((result) => {
         //handle results here
-       // console.log(result);
+        // console.log(result);
         toREturn = "ipfs://" + result["IpfsHash"]
     }).catch((err) => {
         //handle error here
@@ -77,26 +77,26 @@ function createRects(component, componentPalette, filename) {
     let currX = xStart
     let currY = yStart
     for (let i = 4; i < component["length"] - 2; i += 2) {
-         let length =  ethers.BigNumber.from(component[i]).toNumber()
-         let color = componentPalette[component[i + 1]]
-         let testX = currBlockCount + length
+        let length = ethers.BigNumber.from(component[i]).toNumber()
+        let color = componentPalette[component[i + 1]]
+        let testX = currBlockCount + length
 
         if (testX <= totalWidthBlocks) {
-            const line = '<rect width="'+ (20 * length)+'" height= "' + (20) +'" x="' + (currX)+ '" y="'+ (currY)+ '" fill="'+ color +'"/>\n'
+            const line = '<rect width="' + (20 * length) + '" height= "' + (20) + '" x="' + (currX) + '" y="' + (currY) + '" fill="' + color + '"/>\n'
             currX += length * 20
             currBlockCount += length
             fs.appendFileSync(filename, line, (err) => {
                 if (err) {
-                  console.log(err);
+                    console.log(err);
                 }
             });
         }
         else {
             currY += 20
             currX = xStart
-            const line = '\n\n<rect width="'+ (20* length)+'" height= "' + (20) +'" x="' + (currX)+ '" y="'+ (currY)+ '" fill="'+ color +'"/>\n'
+            const line = '\n\n<rect width="' + (20 * length) + '" height= "' + (20) + '" x="' + (currX) + '" y="' + (currY) + '" fill="' + color + '"/>\n'
             currX += length * 20
-            currBlockCount = length ;
+            currBlockCount = length;
             fs.appendFileSync(filename, line, (err) => {
                 if (err) {
                     console.log(err);
@@ -107,6 +107,6 @@ function createRects(component, componentPalette, filename) {
 }
 
 
-module.exports = async function (seed) { 
+module.exports = async function (seed) {
     return await writeSVG(seed);
 };
