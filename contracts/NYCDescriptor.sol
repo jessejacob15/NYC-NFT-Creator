@@ -1,16 +1,13 @@
 pragma solidity ^0.8.9;
 
-
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+//import "@openzeppelin/contracts/utils/Base64.sol";
+
 import "hardhat/console.sol";
-import { Base64 } from "./libraries/Base64.sol";
+import { Base64 } from "./libraries/Base64.sol"; //USE the open zepplin base 64
 import { INYCDescriptor } from './interfaces/INYCDescriptor.sol';
-
-
-
-// We need to import the helper functions from the contract that we copy/pasted.
 
 
 contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
