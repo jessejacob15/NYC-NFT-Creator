@@ -9,6 +9,9 @@ import NYCSeeder from './utils/NYCSeeder.json';
 import LinearProgress from '@mui/material/LinearProgress';
 import theme from './styles/colorsTheme'
 import { ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+
 
 
 const mintMyNFT = require('./functionality/SeedAndMint');
@@ -26,6 +29,7 @@ const CONTRACT_DESCRIPTOR_ADDRESS = "0x91566DB4684c16476bE9BAD8d3De19a631FC6D43"
 const App = () => {
 
     const [currentAccount, setCurrentAccount] = useState("");
+    const [myAlert, setAlert] = useState()
 
     const [loading, setLoading] = useState(false);
     
@@ -96,13 +100,13 @@ const App = () => {
         const signer = provider.getSigner();
         const connectedDescriptorContract = new ethers.Contract(CONTRACT_DESCRIPTOR_ADDRESS, NYCDescriptor.abi, signer)
 
-        // THIS IS THE MAGIC SAUCE.
-        // This will essentially "capture" our event when our contract throws it.
-        // If you're familiar with webhooks, it's very similar to that!
+       // event if minted is completed
         connectedDescriptorContract.on("NewEpicNFTMinted", (from, tokenId) => {
           console.log(from, tokenId.toNumber())
           setLoading(false)
-          alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_DESCRIPTOR_ADDRESS}/${tokenId.toNumber()}`)
+          //alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_DESCRIPTOR_ADDRESS}/${tokenId.toNumber()}`)
+
+          setAlert(<Alert severity="success">NFT minted — check it out:  https://testnets.opensea.io/assets/{CONTRACT_DESCRIPTOR_ADDRESS}/{tokenId.toNumber()}</Alert>)
         });
 
         console.log("Setup event listener!")
@@ -128,6 +132,12 @@ const App = () => {
         const connectedDescriptorContract = new ethers.Contract(CONTRACT_DESCRIPTOR_ADDRESS, NYCDescriptor.abi, signer)
 
         await mintMyNFT(connectedSeederContract, connectedDescriptorContract, currentAccount)
+            .catch((err)=>{
+              setLoading(false);
+              setAlert(<Alert onClose={() => {setAlert("")}} severity="error">
+                        <strong>Error: </strong>Transaction Rejected
+                      </Alert>)
+              })
         
 
       } else {
@@ -146,17 +156,6 @@ const App = () => {
     </button>
   );
 
-  // const renderMintUI = (props) => (
-  //     const isLoggedIn = props.isLoggedIn;
-
-  //   { props.loading === true ? 
-  //     <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
-  //     Mint NFT
-  //   </button> 
-  //   :
-  //   <h1>Loading</h1>
-  //   }
-  // )
 
   function isLoading() {
     const isLoading = loading;
@@ -171,7 +170,10 @@ const App = () => {
 
   return (
     <div className="App">
+       <div className = "alert">{myAlert}</div>
+       
       <div className="container">
+       
         <div className="header-container">
           <img alt = "nameless-logo" src = {namelesslogo} />
           {/* <p className="header gradient-text">namelessyouthclub</p> */}
