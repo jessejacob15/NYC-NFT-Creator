@@ -10,16 +10,6 @@ import "hardhat/console.sol";
 contract NYCSeeder is INYCSeeder {
     mapping(address => Seed) public seeds;
 
-    // function queryMapping(uint _id) public view returns (Seed memory) {
-    //     console.log(seeds[_id].skin);
-    //     console.log(seeds[_id].skinPalette);
-    //     console.log(seeds[_id].jacket);
-    //     console.log(seeds[_id].jacketPalette);
-    //     console.log(seeds[_id].head);
-    //     console.log(seeds[_id].headPalette);
-    //     return seeds[_id];
-    // }
-
     function generateSeed(INYCDescriptor descriptor) external returns (Seed memory) {
 
         uint256 skinCount = descriptor.skinCount();
