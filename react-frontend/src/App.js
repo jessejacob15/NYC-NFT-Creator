@@ -10,7 +10,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import theme from './styles/colorsTheme'
 import { ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
-const mintMyNFT = require('./functionality/SeedAndMint');
+import {mintNFT} from './functionality/SeedAndMint';
 
 const TWITTER_HANDLE = 'namelessyouthclub';
 const TWITTER_LINK = `https://instagram.com/${TWITTER_HANDLE}`;
@@ -116,7 +116,7 @@ const App = () => {
         const connectedSeederContract = new ethers.Contract(CONTRACT_SEEDER_ADDRESS, NYCSeeder.abi, signer);
         const connectedDescriptorContract = new ethers.Contract(CONTRACT_DESCRIPTOR_ADDRESS, NYCDescriptor.abi, signer)
 
-        await mintMyNFT(connectedSeederContract, connectedDescriptorContract, currentAccount)
+        await mintNFT(connectedSeederContract, connectedDescriptorContract, currentAccount)
             .catch((err)=>{
               setLoading(false);
               setAlert(<Alert onClose={() => {setAlert("")}} severity="error">

@@ -1,7 +1,7 @@
 const RLEtoSVG = require('./RLEtoSVG').default;
 
 
-async function mintNFT(nftSeeder, nftDescriptor, account) {
+export const mintNFT = async (nftSeeder, nftDescriptor, account) => {
     console.log("in mintNFT code")
     await nftSeeder.generateSeed(nftDescriptor.address);
     const wholeSeed = await nftSeeder.seeds(account);
@@ -29,6 +29,4 @@ async function mintNFT(nftSeeder, nftDescriptor, account) {
 }
 
 
-module.exports = async function (seeder, desciptor, account) { 
-    return await mintNFT(seeder, desciptor, account);
-};
+export default mintNFT;
