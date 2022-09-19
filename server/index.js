@@ -1,13 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const pinataHelper = require('./pinataHelper');
+const path = require('path');
+
 var logger = require('morgan');
 
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 const cors = require('cors');
-const SeedAndMint = require("../image-processing/SeedAndMint");
 app.use(cors())
 app.use(logger('dev'));
 
