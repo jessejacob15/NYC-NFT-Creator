@@ -10,10 +10,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 import theme from './styles/colorsTheme'
 import { ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-
-
-
 const mintMyNFT = require('./functionality/SeedAndMint');
 
 const TWITTER_HANDLE = 'namelessyouthclub';
@@ -22,20 +18,17 @@ const TWITTER_LINK = `https://instagram.com/${TWITTER_HANDLE}`;
 // const TOTAL_MINT_COUNT = 50;
 
 // I moved the contract address to the top for easy access.
-const CONTRACT_SEEDER_ADDRESS = "0xc0FE7Df4093559fA3d628Ff4be421763D2715330";
-const CONTRACT_DESCRIPTOR_ADDRESS = "0x91566DB4684c16476bE9BAD8d3De19a631FC6D43";
-
+const CONTRACT_SEEDER_ADDRESS = "0x5e18eee72D1c10A65739d008FbcFfa8Dd8aA8dFA";
+const CONTRACT_DESCRIPTOR_ADDRESS = "0x2AF31eA5DCA17f3AfC46f6AbEEB0532849aa4EC5";
 
 const App = () => {
 
     const [currentAccount, setCurrentAccount] = useState("");
     const [myAlert, setAlert] = useState()
-
     const [loading, setLoading] = useState(false);
     
     const checkIfWalletIsConnected = async () => {
       const { ethereum } = window;
-
       if (!ethereum) {
           console.log("Make sure you have metamask!");
           return;
@@ -46,7 +39,6 @@ const App = () => {
       const accounts = await ethereum.request({ method: 'eth_accounts' });
       let chainId = await ethereum.request({ method: 'eth_chainId' });
       const rinkebyChainId = "0x4"; 
-
 
       if (accounts.length !== 0) {
           const account = accounts[0];
@@ -105,11 +97,8 @@ const App = () => {
           console.log(from, tokenId.toNumber())
           setLoading(false)
           //alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_DESCRIPTOR_ADDRESS}/${tokenId.toNumber()}`)
-
-          setAlert(<Alert severity="success">NFT minted — check it out:  https://testnets.opensea.io/assets/{CONTRACT_DESCRIPTOR_ADDRESS}/{tokenId.toNumber()}</Alert>)
+          setAlert(<Alert onClose={() => {setAlert("")}} severity="success">NFT minted — check it out:  https://testnets.opensea.io/assets/{CONTRACT_DESCRIPTOR_ADDRESS}/{tokenId.toNumber()}</Alert>)
         });
-
-        console.log("Setup event listener!")
 
       } else {
         console.log("Ethereum object doesn't exist!");
@@ -145,7 +134,6 @@ const App = () => {
       }
   }
 
-
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])
@@ -156,43 +144,42 @@ const App = () => {
     </button>
   );
 
-
   function isLoading() {
     const isLoading = loading;
     if (isLoading) {
-      return <ThemeProvider theme={theme} ><div className='center'> <LinearProgress className = "spinner" color= "yellow" />  </div></ThemeProvider>
+      return <ThemeProvider theme={theme} ><div className='center'> <LinearProgress className = "spinner" color= "primary" />  </div></ThemeProvider>
     }
-    return <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
+    return <button onClick={askContractToMintNft} className="cta-button mint-button">
          Mint NFT
        </button> ;
   }
   
-
   return (
-    <div className="App">
-       <div className = "alert">{myAlert}</div>
-       
-      <div className="container">
-       
-        <div className="header-container">
-          <img alt = "nameless-logo" src = {namelesslogo} />
-          {/* <p className="header gradient-text">namelessyouthclub</p> */}
-          <p className="sub-text">
-            ideas unmasked
-          </p>
-          {currentAccount === "" ? renderNotConnectedContainer() : isLoading()}
-        </div>
-        <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={instalogo} />
-          <a
-            className="footer-text"
-            href={TWITTER_LINK}
-            target="_blank"
-            rel="noreferrer"
-          >{`@${TWITTER_HANDLE}`}</a>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <div className = "alert">{myAlert}</div>
+        <div className="container">
+        
+          <div className="header-container">
+            <img alt = "nameless-logo" src = {namelesslogo} />
+            {/* <p className="header gradient-text">namelessyouthclub</p> */}
+            <p className="sub-text">
+              ideas unmasked
+            </p>
+            {currentAccount === "" ? renderNotConnectedContainer() : isLoading()}
+          </div>
+          <div className="footer-container">
+            <img alt="Twitter Logo" className="twitter-logo" src={instalogo} />
+            <a
+              className="footer-text"
+              href={TWITTER_LINK}
+              target="_blank"
+              rel="noreferrer"
+            >{`@${TWITTER_HANDLE}`}</a>
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 

@@ -38,35 +38,41 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
     }
 
     function makeAnEpicNFT(uint[] calldata seed, string memory url) public {
-            uint256 newItemId = _tokenIds.current();
-            NFTtoRLEindex[newItemId] = seed;   //[HeadRLE-ID, HeadPallate-ID, SkinRLE-ID, SkinPallate-ID, JacketRLE-ID, JacketPallate-ID]
-            
-            string memory json = Base64.encode(
-                bytes(
-                    string(
-                        abi.encodePacked(
-                            '{"name": "nyc", "description": "A highly acclaimed collection of squares.", "image": "', url,'"}'
-                        )
+        uint256 newItemId = _tokenIds.current();
+        NFTtoRLEindex[newItemId] = seed;   //[HeadRLE-ID, HeadPallate-ID, SkinRLE-ID, SkinPallate-ID, JacketRLE-ID, JacketPallate-ID]
+        
+        string memory json = Base64.encode(
+            bytes(
+                string(
+                    abi.encodePacked(
+                        '{"name": "nyc", "description": "A highly acclaimed collection of squares.", "image": "', url,'"}'
                     )
                 )
-            );
+            )
+        );
         // Just like before, we prepend data:application/json;base64, to our data.
-            string memory finalTokenUri = string(
-                abi.encodePacked("data:application/json;base64,", json)
-            );
-            console.log("minting.....");
-            _safeMint(msg.sender, newItemId);
-            
-            console.log("setting token ID.....");
-            _setTokenURI(newItemId, finalTokenUri);
+        string memory finalTokenUri = string(
+            abi.encodePacked("data:application/json;base64,", json)
+        );
+        console.log("minting.....");
+        _safeMint(msg.sender, newItemId);
+        
+        console.log("setting token ID.....");
+        _setTokenURI(newItemId, finalTokenUri);
 
-            _tokenIds.increment();
-            console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
-            emit NewEpicNFTMinted(msg.sender, newItemId);
-        }
-
+        _tokenIds.increment();
+        console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
+        emit NewEpicNFTMinted(msg.sender, newItemId);
+    }
     
-    function addManyColorsToHeadPalette(string[] calldata newColors) external  {
+    
+    function addManyPalettesToHeadPalette(string[][] calldata newPalettes) external {
+        for (uint256 i = 0; i < newPalettes.length; i++) {
+            _addPaletteToHeadPalette(newPalettes[i]);
+        }
+    }
+    
+    function _addPaletteToHeadPalette(string[] calldata newColors) internal  {
         require(headPalettes[_headPaletteID.current()].length + newColors.length <= 256, 'Palettes can only hold 256 colors');
         for (uint256 i = 0; i < newColors.length; i++) {
             _addColorToHeadPalette(_headPaletteID.current(), newColors[i]);
@@ -127,7 +133,7 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         headPalettes[_paletteIndex].push(_color);
     }
 
-    function addManyColorsToSkinPalette(string[] calldata newColors) external  {
+    function addPaletteToSkinPalette(string[] calldata newColors) external  {
         require(skinPalettes[_skinPaletteID.current()].length + newColors.length <= 256, 'Palettes can only hold 256 colors');
         for (uint256 i = 0; i < newColors.length; i++) {
             _addColorToSkinPalette(_skinPaletteID.current(), newColors[i]);
@@ -138,7 +144,13 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         skinPalettes[_paletteIndex].push(_color);
     }
 
-    function addManyColorsToJacketPalette(string[] calldata newColors) external  {
+  function addManyPalettesToJacketPalette(string[][] calldata newPalettes) external {
+        for (uint256 i = 0; i < newPalettes.length; i++) {
+            _addPaletteToJacketPalette(newPalettes[i]);
+        }
+    }
+
+    function _addPaletteToJacketPalette(string[] calldata newColors) internal  {
         require(jacketPalettes[_jacketPaletteID.current()].length + newColors.length <= 256, 'Palettes can only hold 256 colors');
         for (uint256 i = 0; i < newColors.length; i++) {
             _addColorToJacketPalette(_jacketPaletteID.current(), newColors[i]);

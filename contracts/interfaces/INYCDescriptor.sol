@@ -16,11 +16,11 @@ interface INYCDescriptor {
 
     function skinPaletteCount() external view returns (uint256);
 
-    function addManyColorsToHeadPalette(string[] calldata newColors) external;
+    function addManyPalettesToHeadPalette(string[][] calldata newPalettes) external;
 
-    function addManyColorsToSkinPalette(string[] calldata newColors) external;
+    function addPaletteToSkinPalette(string[] calldata newColors) external;
 
-    function addManyColorsToJacketPalette(string[] calldata newColors) external;
+    function addManyPalettesToJacketPalette(string[][] calldata newPalettes) external;
 
     function addHead(uint[] calldata _headRLE) external;
 
