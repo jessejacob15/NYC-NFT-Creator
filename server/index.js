@@ -11,6 +11,17 @@ const SeedAndMint = require("../image-processing/SeedAndMint");
 app.use(cors())
 app.use(logger('dev'));
 
+app.use(express.static(path.resolve(__dirname, '../react-frontend/build')));
+
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../react-frontend/build', 'index.html'));
+});
+
+
 // create application/json parser
 var jsonParser = bodyParser.json()
  
