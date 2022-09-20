@@ -21,9 +21,7 @@ async function uploadToPinata(filename) {
 
     let toREturn = ""
     await pinataInside.testAuthentication().then((result) => {
-        //handle successful authentication here
-        //console.log(result);
-       
+        console.log(result);       
     }).catch((err) => {
         //handle error here
         console.log(err);
