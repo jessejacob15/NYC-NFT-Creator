@@ -17,7 +17,7 @@ async function writeSVG(seed) {
     const data = {
         "data" : svgTxt
     }
-    await fetch("https://nyc.splash-page.herokuapp.com/handle", {
+    await fetch("https://nyc-splash-page.herokuapp.com/handle", {
           method: 'POST',
           mode: 'cors',
           headers: {
