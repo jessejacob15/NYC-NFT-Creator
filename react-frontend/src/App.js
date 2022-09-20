@@ -11,6 +11,7 @@ import theme from './styles/colorsTheme'
 import { ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import {mintNFT} from './functionality/SeedAndMint';
+import Grid from './components/ComponentsBox';
 
 const TWITTER_HANDLE = 'namelessyouthclub';
 const TWITTER_LINK = `https://instagram.com/${TWITTER_HANDLE}`;
@@ -158,11 +159,11 @@ const App = () => {
         
           <div className="header-container">
             <img alt = "nameless-logo" src = {namelesslogo} />
-            {/* <p className="header gradient-text">namelessyouthclub</p> */}
-            <p className="sub-text">
-              ideas unmasked
-            </p>
+            <h1 className="sub-text">ideas unmasked</h1>
             {currentAccount === "" ? renderNotConnectedContainer() : isLoading()}
+          </div>
+          <div className='components-container'>
+          {currentAccount === "" ? <></> : <Grid />  }
           </div>
           <div className="footer-container">
             <img alt="Twitter Logo" className="twitter-logo" src={instalogo} />

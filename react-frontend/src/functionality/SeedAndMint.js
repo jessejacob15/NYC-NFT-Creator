@@ -29,4 +29,4 @@ export const mintNFT = async (nftSeeder, nftDescriptor, account) => {
 }
 
 
-export default mintNFT;
+export default mintNFT
