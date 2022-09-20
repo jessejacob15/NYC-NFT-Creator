@@ -24,7 +24,10 @@ async function writeSVG(seed) {
             'Content-Type': 'application/json',
           },
           body: (JSON.stringify(data))
-    }).then(res => res.json()).then(json => finalURL = json.pinata)
+    }).then(res => {
+        res.json()
+        return res.sendStatus(200);
+        }).then(json => finalURL = json.pinata)
     return finalURL
 }
 
