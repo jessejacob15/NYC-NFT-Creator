@@ -118,13 +118,13 @@ const App = () => {
 
         await mintNFT(connectedSeederContract, connectedDescriptorContract, currentAccount)
             .catch((err)=>{
+              console.log(err)
               setLoading(false);
               setAlert(<Alert onClose={() => {setAlert("")}} severity="error">
                         <strong>Error: </strong>Transaction Rejected
                       </Alert>)
               })
         
-
       } else {
         console.log("Ethereum object doesn't exist!");
       }

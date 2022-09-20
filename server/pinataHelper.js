@@ -19,7 +19,7 @@ async function returnPinataUrl(svgText) {
 async function uploadToPinata(filename) {
     const pinataInside = pinataSDK(process.env.PINATA_KEY, process.env.PINATA_SECRET_KEY);
 
-    let toREturn = ""
+    let toReturn = ""
     await pinataInside.testAuthentication().then((result) => {
         console.log(result);       
     }).catch((err) => {
@@ -43,13 +43,13 @@ async function uploadToPinata(filename) {
     await pinata.pinFileToIPFS(readableStreamForFile, options).then((result) => {
         //handle results here
        // console.log(result);
-        toREturn = "ipfs://" + result["IpfsHash"]
+        toReturn = "ipfs://" + result["IpfsHash"]
     }).catch((err) => {
         //handle error here
         console.log(err);
     });
 
-    return toREturn
+    return toReturn
 }
 
 module.exports = async function (svg) { 

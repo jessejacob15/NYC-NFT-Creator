@@ -33,7 +33,7 @@ app.post('/handle', jsonParser, async (request,response) => {
     //code to perform particular action.
     //To access POST variable use req.body()methods.
     let txn = await pinataHelper(request.body.data)
-    //console.log(txn)
+    console.log(txn)
     const urlResponse = {
       "pinata" : txn
     }

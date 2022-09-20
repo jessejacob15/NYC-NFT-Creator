@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+
 require('dotenv').config()
 
 async function writeSVG(seed) {
@@ -17,17 +18,22 @@ async function writeSVG(seed) {
     const data = {
         "data" : svgTxt
     }
-    await fetch("https://nyc-splash-page.herokuapp.com/handle", {
+
+    let url = ""
+    if (window.location.hostname === "localhost")
+        url = "http://localhost:3001/handle"
+    else
+        url = "https://nyc-splash-page.herokuapp.com/handle"
+        
+    await fetch(url, {
           method: 'POST',
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
           },
           body: (JSON.stringify(data))
-    }).then(res => {
-        res.json()
-        return res.sendStatus(200);
-        }).then(json => finalURL = json.pinata)
+    }).then(res => 
+        res.json()).then(json => finalURL = json.pinata)
     return finalURL
 }
 
