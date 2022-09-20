@@ -57,7 +57,6 @@ async function createRects(component, componentPalette, filename) {
             const line = '\n\n<rect width="'+ (20* length)+'" height= "' + (20) +'" x="' + (currX)+ '" y="'+ (currY)+ '" fill="'+ color +'"/>\n'
             currX += length * 20
             currBlockCount = length ;
-
             svgTxt += line
         }
     }
