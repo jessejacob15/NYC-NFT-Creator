@@ -17,8 +17,10 @@ async function returnPinataUrl(svgText) {
 }
 
 async function uploadToPinata(filename) {
+    const pinataInside = pinataSDK(process.env.PINATA_KEY, process.env.PINATA_SECRET_KEY);
+
     let toREturn = ""
-    await pinata.testAuthentication().then((result) => {
+    await pinataInside.testAuthentication().then((result) => {
         //handle successful authentication here
         //console.log(result);
        
