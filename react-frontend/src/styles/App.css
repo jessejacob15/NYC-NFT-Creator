@@ -85,6 +85,7 @@
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
   margin-top: 15px;
+  margin-bottom: 20px;
   /* margin-right: 15px; */
 }
 
