@@ -1,9 +1,4 @@
-// import '../styles/App.css';
  import { ethers } from "ethers";
-// import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper';
-// import Stack from '@mui/material/Stack';
-// import { styled } from '@mui/material/styles';
 import NYCDescriptor from '../utils/NYCDescriptor.json';
 import React, { useState } from "react";
 

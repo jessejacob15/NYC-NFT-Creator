@@ -12,6 +12,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import {mintNFT} from './functionality/SeedAndMint';
 import Grid from './components/ComponentsBox';
+import OwnedNFTs from './components/OwnedNFTs';
 
 const TWITTER_HANDLE = 'namelessyouthclub';
 const TWITTER_LINK = `https://instagram.com/${TWITTER_HANDLE}`;
@@ -164,6 +165,9 @@ const App = () => {
           </div>
           <div className='components-container'>
           {currentAccount === "" ? <></> : <Grid />  }
+          </div>
+          <div className = 'components-container'>
+          {currentAccount === "" ? <></> : <OwnedNFTs />  }
           </div>
           <div className="footer-container">
             <img alt="Twitter Logo" className="twitter-logo" src={instalogo} />
