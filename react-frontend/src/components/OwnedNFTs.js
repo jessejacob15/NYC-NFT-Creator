@@ -15,7 +15,8 @@ const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#000000",
   padding: theme.spacing(1),
   textAlign: 'center',
-  color: '#FFF',
+  color: '#FD593D',
+  fontSize: '25px',
   fontFamily: "myfont"
 }));
 
@@ -23,6 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const OwnedNFTs = () => {
 
   const [balance, setBalance] = useState("");
+  const [tokens, setTokens] = useState([])
 
 
   async function getNFTs() {
@@ -36,12 +38,17 @@ const OwnedNFTs = () => {
       const connectedDescriptorContract = new ethers.Contract(CONTRACT_DESCRIPTOR_ADDRESS, NYCDescriptor.abi, signer)
 
       const accountBalance = await connectedDescriptorContract.balanceOf(account);
-      console.log(accountBalance)
       setBalance(accountBalance.toNumber())
-      console.log(balance)
 
+      // const acctTokens = []
+    
+      // for (let i = 0; i < balance; i ++) {
+      //   acctTokens.push(await connectedDescriptorContract.tokenOfOwnerByIndex(account, i))
+      // }
+      // setTokens(acctTokens)
     }
-  } 
+  }
+   
 
   getNFTs()
 
@@ -50,6 +57,7 @@ const OwnedNFTs = () => {
       
       <Stack spacing={2}>
         <Item> NFTs owned by you: {balance} </Item>
+        {/* <Item> Tokens:  {tokens} </Item> */}
        
       </Stack>
     </Box>

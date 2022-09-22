@@ -2,6 +2,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 //import "@openzeppelin/contracts/utils/Base64.sol";
 
@@ -10,7 +11,7 @@ import { Base64 } from "./libraries/Base64.sol"; //USE the open zepplin base 64
 import { INYCDescriptor } from './interfaces/INYCDescriptor.sol';
 
 
-contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
+contract NYCDescriptor is INYCDescriptor, ERC721URIStorage, ERC721Enumerable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -64,8 +65,7 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
         emit NewEpicNFTMinted(msg.sender, newItemId);
     }
-    
-    
+        
     function addManyPalettesToHeadPalette(string[][] calldata newPalettes) external {
         for (uint256 i = 0; i < newPalettes.length; i++) {
             _addPaletteToHeadPalette(newPalettes[i]);
@@ -100,7 +100,7 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         return skinPalettes[_id];
     }
 
-      function getJacket(uint _id) public view returns (uint[] memory ) {
+    function getJacket(uint _id) public view returns (uint[] memory ) {
         return jackets[_id];
     }
 
@@ -112,7 +112,6 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         return _headPaletteID.current();
     }
     
-
     function jacketCount() public view returns (uint){
         return _jacketID.current();
     }
@@ -140,11 +139,12 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         }
         _skinPaletteID.increment();
     }
+
     function _addColorToSkinPalette(uint256 _paletteIndex, string calldata _color) internal {
         skinPalettes[_paletteIndex].push(_color);
     }
 
-  function addManyPalettesToJacketPalette(string[][] calldata newPalettes) external {
+    function addManyPalettesToJacketPalette(string[][] calldata newPalettes) external {
         for (uint256 i = 0; i < newPalettes.length; i++) {
             _addPaletteToJacketPalette(newPalettes[i]);
         }
@@ -157,6 +157,7 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
         }
         _jacketPaletteID.increment();
     }
+
     function _addColorToJacketPalette(uint256 _paletteIndex, string calldata _color) internal {
         jacketPalettes[_paletteIndex].push(_color);
     }
@@ -264,6 +265,37 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage {
                 idx += 2;
             }
             return finalSVG;
+    }
+
+    //OVERRIDE overlapping methods between ERC721UIStorage and ERC721Enumberable ----------------------------------------------------------
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 
 }
