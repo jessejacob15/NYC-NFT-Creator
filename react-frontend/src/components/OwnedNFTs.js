@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
 
-const CONTRACT_DESCRIPTOR_ADDRESS = "0x2AF31eA5DCA17f3AfC46f6AbEEB0532849aa4EC5";
+const CONTRACT_DESCRIPTOR_ADDRESS = "0xCFdf38f7e7Cf2aA267EE70608525590aDA06531E";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#000000",
@@ -40,12 +40,12 @@ const OwnedNFTs = () => {
       const accountBalance = await connectedDescriptorContract.balanceOf(account);
       setBalance(accountBalance.toNumber())
 
-      // const acctTokens = []
+      const acctTokens = []
     
-      // for (let i = 0; i < balance; i ++) {
-      //   acctTokens.push(await connectedDescriptorContract.tokenOfOwnerByIndex(account, i))
-      // }
-      // setTokens(acctTokens)
+      for (let i = 0; i < balance; i ++) {
+        acctTokens.push(await connectedDescriptorContract.tokenOfOwnerByIndex(account, i))
+      }
+      setTokens(acctTokens)
     }
   }
    
@@ -57,7 +57,7 @@ const OwnedNFTs = () => {
       
       <Stack spacing={2}>
         <Item> NFTs owned by you: {balance} </Item>
-        {/* <Item> Tokens:  {tokens} </Item> */}
+        <Item> Tokens:  {tokens} </Item>
        
       </Stack>
     </Box>
