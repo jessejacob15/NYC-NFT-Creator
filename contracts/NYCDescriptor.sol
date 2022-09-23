@@ -201,24 +201,16 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage, ERC721Enumerable {
         uint jacketComponent = componentIdx[4];
         uint jacketPalette = componentIdx[5];
 
-        console.log("starting SVG encodes");
         bytes memory finalSVG = (bytes.concat('<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">', '<rect width="100%" height="100%" fill="#ffcccb"/>'));
         
         finalSVG = bytes.concat(finalSVG, componentToSVG(skins[skinComponent], skinPalettes[skinPalette]));
-        console.log("done skin");
-
-            finalSVG = bytes.concat(finalSVG, componentToSVG(jackets[jacketComponent], jacketPalettes[jacketPalette]));
-        console.log("done jacket");
-        
+        finalSVG = bytes.concat(finalSVG, componentToSVG(jackets[jacketComponent], jacketPalettes[jacketPalette]));        
         finalSVG = bytes.concat(finalSVG, componentToSVG(heads[headComponent], headPalettes[headPalette]));
-        console.log("done head");
-
         finalSVG = bytes.concat(bytes(finalSVG), bytes('</svg>'));
-        console.log(string(finalSVG));
         return string(finalSVG);
     }
 
-    function componentToSVG(uint256[] memory _componentRLE, string[] memory _componentPalette) public view returns (bytes memory) {
+    function componentToSVG(uint256[] memory _componentRLE, string[] memory _componentPalette) public pure returns (bytes memory) {
             uint endX = _componentRLE[1];
             uint currX = _componentRLE[3];
             uint currY = _componentRLE[0];
@@ -235,38 +227,13 @@ contract NYCDescriptor is INYCDescriptor, ERC721URIStorage, ERC721Enumerable {
                 if (currX >= endX) {
                     currY += 20;
                     currX = _componentRLE[3];
-                    if (currY > ((_componentRLE[0] + _componentRLE[2]) / 2)) {
-                        console.log("halfway *******");
-                        finalSVG = bytes.concat(bytes(finalSVG), secondHalfToSVG(_componentRLE, _componentPalette, currX, currY, endX, idx += 2));
-                        break;
-                    }
-                }
-                idx += 2;
-            }
-        // finalSVG = bytes.concat(bytes(finalSVG), bytes('</svg>'));
-            return finalSVG;
-    }
-
-    function secondHalfToSVG(uint256[] memory _componentRLE, string[] memory _componentPalette, uint currX, uint currY, uint endX, uint idx) internal view returns (bytes memory) {
-            uint startX = currX;
-            bytes memory finalSVG = "";
-            while (idx < _componentRLE.length){
-                uint len = _componentRLE[idx];
-                uint color = _componentRLE[idx + 1];
-                if (color != 0) {
-                    bytes memory newRect = bytes.concat('<rect width="', bytes(Strings.toString(20 * len)), '" height="', bytes(Strings.toString(20)), '" x="', bytes(Strings.toString(currX)), '" y="', bytes(Strings.toString(currY)), '" fill="', bytes(_componentPalette[color]), '"/>');
-                    finalSVG = bytes.concat(bytes(finalSVG), bytes(newRect));
-                }
-                currX += 20 * len;
-                if (currX >= endX) {
-                    currY += 20;
-                    currX = startX;
                 }
                 idx += 2;
             }
             return finalSVG;
     }
 
+    
     //OVERRIDE overlapping methods between ERC721UIStorage and ERC721Enumberable ----------------------------------------------------------
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)

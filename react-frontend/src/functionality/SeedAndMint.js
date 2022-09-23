@@ -20,9 +20,8 @@ export const mintNFT = async (nftSeeder, nftDescriptor, account) => {
     head: head,
     headPalette: headPalette
     }
-
-    const url = await RLEtoSVG(mySeed);
-   
+    
+    const url = await RLEtoSVG(mySeed);   
     const txn = await nftDescriptor.makeAnEpicNFT(wholeSeed, url)
     await txn.wait()
     console.log("completed mint")

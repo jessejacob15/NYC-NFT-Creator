@@ -17,6 +17,10 @@ module.exports = {
       url: process.env.QUICKNODE_API_KEY_URL_KOVAN,
       accounts: [process.env.PRIVATE_KEY],
     },
+    goerli: {
+      url: process.env.QUICKNODE_API_KEY_URL_GOERLI,
+      accounts: [process.env.PRIVATE_KEY],
+    },
     // hardhat: {
     //     blockGasLimit: 100000000429720 // whatever you want here
     // },

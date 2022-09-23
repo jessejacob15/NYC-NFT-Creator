@@ -48,6 +48,24 @@
   font-family: "myFont";
 }
 
+.card-text {
+  color: #FD593D;
+  font-family: "myFont";
+  font-size: 20px;
+}
+
+.my-card {
+  background-color: #EFEF85; 
+  padding: 10px;
+  border-color: #EFEF85;
+  margin: 10px;
+}
+
+.card-button {
+  margin: 5px;
+}
+
+
 .gradient-text {
   background: -webkit-linear-gradient(left, #60c657 30%, #35aee2 60%);
   background-clip: text;
@@ -70,7 +88,20 @@
 
 }
 
+/* .MuiCard-root {
+  border-width: 1px;
+  border-color: white;
+} */
 
+.button-text {
+  font-size: 15px;
+  font-family: "myFont";
+}
+
+.card-content {
+  background-color: black;
+  align-items: center;
+}
 
 .connect-wallet-button {
   font-family: "myFont";

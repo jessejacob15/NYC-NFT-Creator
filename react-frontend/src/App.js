@@ -3,7 +3,6 @@ import instalogo from './assets/Instagram-Logo.wine.svg'
 import namelesslogo from './assets/nameless.png'
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
-//import myEpicNft from '.utils/NYCDescriptor.json'
 import NYCDescriptor from './utils/NYCDescriptor.json';
 import NYCSeeder from './utils/NYCSeeder.json';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -20,8 +19,8 @@ const TWITTER_LINK = `https://instagram.com/${TWITTER_HANDLE}`;
 // const TOTAL_MINT_COUNT = 50;
 
 // I moved the contract address to the top for easy access.
-const CONTRACT_SEEDER_ADDRESS = "0x5e18eee72D1c10A65739d008FbcFfa8Dd8aA8dFA";
-const CONTRACT_DESCRIPTOR_ADDRESS = "0x2AF31eA5DCA17f3AfC46f6AbEEB0532849aa4EC5";
+const CONTRACT_SEEDER_ADDRESS = "0xb0060BB6144D7029866b746bc2D35C382C98e75d";
+const CONTRACT_DESCRIPTOR_ADDRESS = "0x8Bc3345e219ef14d1137435ded9f6c454F8136Af";
 
 const App = () => {
 
@@ -35,18 +34,19 @@ const App = () => {
           console.log("Make sure you have metamask!");
           return;
       } else {
-          console.log("We have the ethereum object", ethereum);
+          //console.log("We have the ethereum object", ethereum);
       }
 
       const accounts = await ethereum.request({ method: 'eth_accounts' });
       let chainId = await ethereum.request({ method: 'eth_chainId' });
       const rinkebyChainId = "0x4"; 
+      const goerliChainId = "0x5"
 
       if (accounts.length !== 0) {
           const account = accounts[0];
-          console.log("Found an authorized account:", account);
-          if (chainId !== rinkebyChainId) {
-            alert("You are not connected to the Rinkeby Test Network!");
+          //console.log("Found an authorized account:", account);
+          if (chainId !== goerliChainId) {
+            alert("You are not connected to the Goerli Test Network!");
           }
           else {
             setCurrentAccount(account)
@@ -92,10 +92,10 @@ const App = () => {
 
        // event if minted is completed
         connectedDescriptorContract.on("NewEpicNFTMinted", (from, tokenId) => {
-          console.log(from, tokenId.toNumber())
+          //console.log(from, tokenId.toNumber())
           setLoading(false)
           //alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_DESCRIPTOR_ADDRESS}/${tokenId.toNumber()}`)
-          setAlert(<Alert onClose={() => {setAlert("")}} severity="success">NFT minted — check it out:  https://testnets.opensea.io/assets/{CONTRACT_DESCRIPTOR_ADDRESS}/{tokenId.toNumber()}</Alert>)
+          setAlert(<Alert onClose={() => {setAlert("")}} severity="success">NFT minted — check it out:  https://testnets.opensea.io/assets/goerli/{CONTRACT_DESCRIPTOR_ADDRESS}/{tokenId.toNumber()}</Alert>)
         });
 
       } else {
