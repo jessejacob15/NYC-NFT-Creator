@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
 
-const CONTRACT_DESCRIPTOR_ADDRESS = "0xCFdf38f7e7Cf2aA267EE70608525590aDA06531E";
+const CONTRACT_DESCRIPTOR_ADDRESS = "0x8Bc3345e219ef14d1137435ded9f6c454F8136Af";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#000000",
