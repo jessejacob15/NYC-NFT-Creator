@@ -10,6 +10,7 @@ const CONTRACT_DESCRIPTOR_ADDRESS = "0x8Bc3345e219ef14d1137435ded9f6c454F8136Af"
 
 
 const tokenCard = (props) => {
+    console.log("pipeline works")
     const tokenURI = props.tokenURI.substring(0, props.tokenURI.length - 1)
     const tokens = tokenURI.split("+")
 
@@ -31,9 +32,7 @@ const tokenCard = (props) => {
                 alt="NFT image"
                 />
                 <CardContent className = "card-content">
-                {/* <Typography gutterBottom variant="h5" className='sub-text'>
-                    Token Name: {result.name}
-                </Typography> */}
+              
                 <div  className='card-text' >
                     Token ID: {tokenID}
                 </div>
