@@ -10,7 +10,7 @@ const CONTRACT_DESCRIPTOR_ADDRESS = "0x8Bc3345e219ef14d1137435ded9f6c454F8136Af"
 
 
 const tokenCard = (props) => {
-    console.log("pipeline works mashallah")
+    console.log("pipeline works inshallah")
     const tokenURI = props.tokenURI.substring(0, props.tokenURI.length - 1)
     const tokens = tokenURI.split("+")
 
