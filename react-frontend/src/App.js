@@ -39,7 +39,7 @@ const App = () => {
 
       const accounts = await ethereum.request({ method: 'eth_accounts' });
       let chainId = await ethereum.request({ method: 'eth_chainId' });
-      const rinkebyChainId = "0x4"; 
+      //const rinkebyChainId = "0x4"; 
       const goerliChainId = "0x5"
 
       if (accounts.length !== 0) {

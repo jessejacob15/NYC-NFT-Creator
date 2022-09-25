@@ -1,16 +1,8 @@
-//import { ethers } from "ethers";
-//import NYCDescriptor from '../utils/NYCDescriptor.json';
-//import React, { useState } from "react";
-
-//import * as React from 'react';
-
-
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
 
@@ -20,7 +12,6 @@ const CONTRACT_DESCRIPTOR_ADDRESS = "0x8Bc3345e219ef14d1137435ded9f6c454F8136Af"
 const tokenCard = (props) => {
     const tokenURI = props.tokenURI.substring(0, props.tokenURI.length - 1)
     const tokens = tokenURI.split("+")
-    console.log(tokens)
 
     const finalTokens = []
     tokens.forEach((token) => {
@@ -32,7 +23,7 @@ const tokenCard = (props) => {
         const image = "https://cloudflare-ipfs.com/ipfs/" + hash 
         const openseaURL = "https://testnets.opensea.io/assets/goerli/" + CONTRACT_DESCRIPTOR_ADDRESS + "/" + tokenID
         const goerliURL = "https://goerli.etherscan.io/token/0x8bc3345e219ef14d1137435ded9f6c454f8136af?a=" + tokenID
-        const html = <Card sx={{ maxWidth: 350, borderColor: 'black' }} className = "my-card">
+        const html = <Card sx={{ maxWidth: 350, borderColor: 'black' }} className = "my-card" key = {tokenID}>
                 <CardMedia
                 component="img"
                 height="500"
