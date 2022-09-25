@@ -30,4 +30,4 @@ jobs:
 #     - run: npm run build --if-present
     - run: cd react-frontend && npm install
     - run: cd react-frontend && npm run build
-    - run: npm test --if-present
+#     - run: npm test --if-present
