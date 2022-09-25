@@ -7,15 +7,11 @@ module.exports = {
   solidity: '0.8.9',
   networks: {
     rinkeby: {
-      url: process.env.QUICKNODE_API_KEY_URL,
+      url: process.env.QUICKNODE_API_KEY_URL_RINKEBY,
       accounts: [process.env.PRIVATE_KEY],
       chainId: 4
       // gasPrice: 20e9,
       // gas: 25e6,
-    },
-    kovan: {
-      url: process.env.QUICKNODE_API_KEY_URL_KOVAN,
-      accounts: [process.env.PRIVATE_KEY],
     },
     goerli: {
       url: process.env.QUICKNODE_API_KEY_URL_GOERLI,

@@ -24,7 +24,8 @@ const tokenCard = (props) => {
 
     const finalTokens = []
     tokens.forEach((token) => {
-        const tokenID = token[0]
+
+        const tokenID = token.substring(0, token.indexOf("-"))
         const json = Buffer.from(token.substring(31), "base64").toString()
         const result = JSON.parse(json);
         const hash = result.image.substring(7)
