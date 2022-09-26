@@ -31,3 +31,13 @@ jobs:
     - run: cd react-frontend && npm install
     - run: cd react-frontend && npm run build
 #     - run: npm test --if-present
+      
+      
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+          name: dist-without-markdown
+          path: |
+            dist
+            !dist/**/*.md
+      
