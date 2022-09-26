@@ -37,7 +37,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: dist-without-markdown
-          path: |
-            dist
-            !dist/**/*.md
+          path: react-frontend/build/index.html
       
