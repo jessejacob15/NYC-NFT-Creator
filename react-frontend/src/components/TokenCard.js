@@ -23,7 +23,7 @@ const tokenCard = (props) => {
         const hash = result.image.substring(7)
         const image = "https://cloudflare-ipfs.com/ipfs/" + hash 
         const openseaURL = "https://testnets.opensea.io/assets/goerli/" + CONTRACT_DESCRIPTOR_ADDRESS + "/" + tokenID
-        const goerliURL = "https://goerli.etherscan.io/token/0x8bc3345e219ef14d1137435ded9f6c454f8136af?a=" + tokenID
+        const goerliURL = "https://goerli.etherscan.io/token/" + CONTRACT_DESCRIPTOR_ADDRESS + "?a=" + tokenID
         const html = <Card sx={{ maxWidth: 350, borderColor: 'black' }} className = "my-card" key = {tokenID}>
                 <CardMedia
                 component="img"
