@@ -10,7 +10,6 @@ const CONTRACT_DESCRIPTOR_ADDRESS = "0x23b6a2B1A5Bd81c35953D17FF44c87bfb248a24c"
 
 
 const tokenCard = (props) => {
-    console.log("pipeline works blue is the colour")
     const tokenURI = props.tokenURI.substring(0, props.tokenURI.length - 1)
     const tokens = tokenURI.split("+")
 
