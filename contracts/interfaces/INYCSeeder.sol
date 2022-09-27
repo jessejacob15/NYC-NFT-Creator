@@ -12,5 +12,7 @@ interface INYCSeeder {
         uint48 headPalette;
     }
 
-    function generateSeed(INYCDescriptor descriptor) external returns (Seed memory);
+    // function generateSeed(INYCDescriptor descriptor) external returns (Seed memory);
+    function generateSeed(INYCDescriptor descriptor) external returns (uint48[6] memory);
+
 }

@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import TokenCard from './TokenCard'
 
-const CONTRACT_DESCRIPTOR_ADDRESS = "0x8Bc3345e219ef14d1137435ded9f6c454F8136Af";
+const CONTRACT_DESCRIPTOR_ADDRESS = "0x23b6a2B1A5Bd81c35953D17FF44c87bfb248a24c";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#000000",

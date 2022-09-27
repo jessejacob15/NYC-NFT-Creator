@@ -8,9 +8,9 @@ import "hardhat/console.sol";
 
 
 contract NYCSeeder is INYCSeeder {
-    mapping(address => Seed) public seeds;
+   // mapping(address => Seed) public seeds;
 
-    function generateSeed(INYCDescriptor descriptor) external returns (Seed memory) {
+    function generateSeed(INYCDescriptor descriptor) view external returns (uint48[6] memory) {
 
         uint256 skinCount = descriptor.skinCount();
         uint256 jacketCount = descriptor.jacketCount();
@@ -42,8 +42,11 @@ contract NYCSeeder is INYCSeeder {
                 random() % headPaletteCount
             )
         });
-        seeds[msg.sender] = mySeed;
-        return mySeed;
+
+        uint48[6] memory toReturn = [mySeed.skin, mySeed.skinPalette, mySeed.jacket, mySeed.jacketPalette, mySeed.head, mySeed.headPalette];
+
+     //   seeds[msg.sender] = mySeed;
+        return toReturn;
     }
 
     function random() private view returns (uint) {
