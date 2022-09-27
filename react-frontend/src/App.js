@@ -95,7 +95,7 @@ const App = () => {
           //console.log(from, tokenId.toNumber())
           setLoading(false)
           //alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_DESCRIPTOR_ADDRESS}/${tokenId.toNumber()}`)
-          setAlert(<Alert onClose={() => {setAlert("")}} severity="success">NFT minted successfully -- find it below.  We are glad to have you</Alert>)
+          setAlert(<Alert onClose={() => {setAlert("")}} severity="success">NFT minted successfully with token ID {tokenId.toNumber()}.  We are glad to have you</Alert>)
         });
 
       } else {
