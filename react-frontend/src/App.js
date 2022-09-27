@@ -146,7 +146,7 @@ const App = () => {
   function isLoading() {
     const isLoading = loading;
     if (isLoading) {
-      return <ThemeProvider theme={theme} ><div className='center'> <LinearProgress className = "spinner" color= "primary" />  </div></ThemeProvider>
+      return <ThemeProvider theme={theme} ><div className='center'> <LinearProgress className = "spinner" color= "secondary" />  </div></ThemeProvider>
     }
     return <button onClick={askContractToMintNft} className="cta-button mint-button">
          Mint NFT
