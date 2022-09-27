@@ -156,11 +156,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <div className = "alert">{myAlert}</div>
-        <div className="container">
-        
+        <div className = "alert">{myAlert}</div>        
           <div className="header-container">
-            <img alt = "nameless-logo" src = {namelesslogo} />
+            <img alt = "nameless-logo" src = {namelesslogo} className = "nameless-logo"/>
             <h1 className="sub-text">ideas unmasked</h1>
             {currentAccount === "" ? renderNotConnectedContainer() : isLoading()}
           </div>
@@ -180,7 +178,6 @@ const App = () => {
             >{`@${TWITTER_HANDLE}`}</a>
           </div>
         </div>
-      </div>
     </ThemeProvider>
   );
 };
