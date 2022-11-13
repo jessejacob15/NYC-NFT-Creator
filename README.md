@@ -5,7 +5,7 @@
 ## Python Scripts
 ./python-svg-work/scripts
 
-###Main achievements
+### Main achievements
 1) RLE Creation: Broke down original image using python image library in order to generate RLE (row line endcoding) for each component (head, jacket, skin). This is done using the cImage.py library.  
 
 Usage: to print RLE from a component PNG file run 'python3 componentToRLE.py' and follow prompts
