@@ -43,14 +43,16 @@ takes svg text sent from a post request from frontend react application and crea
    1) calling Seeder Contract
    2) getting each component from Descriptor Contract using indexes from seed
    3) creating a seed Javasscript object with these RLE components 
-      ```   const mySeed = {
-    skin: skin, 
-    skinPalette: skinPalette,
-    jacket: jacket,
-    jacketPalette: jacketPalette,
-    head: head,
-    headPalette: headPalette
-    }  ``` 
+     ```   
+       const mySeed = {
+       skin: skin, 
+       skinPalette: skinPalette,
+       jacket: jacket,
+       jacketPalette: jacketPalette,
+       head: head,
+       headPalette: headPalette
+       }  
+    ``` 
    4) create svg text in ./react-frontend/src/functionality/RLEtoSVG.js 
    5) post request to /handle endpoint to get ipfs hash 
    6) finally call Descriptor method using original seed and url
