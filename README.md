@@ -1,4 +1,19 @@
-# Sample Hardhat Project
+# Nameless Youth Club Development Structure
+
+
+
+## Python Scripts
+./python-svg-work/scripts
+
+###Main achievements
+1) RLE Creation: Broke down original image using python image library in order to generate RLE (row line endcoding) for each component (head, jacket, skin). This is done using the cImage.py library.  
+
+Usage: to print RLE from a component PNG file run 'python3 componentToRLE.py' and follow prompts
+
+2) Palette Generation: created color palletes using machine learning techniques to maintain depth of original image coloring with different base colors
+
+
+## Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
@@ -11,7 +26,6 @@ GAS_REPORT=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
-
 
 
 1) python client sends contract RLE data and palattes after parsing png images and contract stores in mappings on chain
