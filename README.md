@@ -60,5 +60,7 @@ serves the entire application front end
    5) post request to /handle endpoint to get ipfs url 
    6) finally call Descriptor method using original seed and ipfs url
   
+  ## Hosting
+  the application is hosted using Heroku and is live on page: nyc-splash-page.herokuapp.com
 
 
