@@ -64,7 +64,7 @@ class NFTSeeder:
             dirname = os.path.dirname(__file__)
             svgFile = open(dirname+ "/GeneratedNFTs/"+filename, "w")
 
-            header = '<svg width="780" height="1000" viewbox ="0,0,780,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
+            header = '<svg width="1000" height="1000" viewbox ="0,0,1000,1000" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
             back = '<rect width="100%" height="100%" fill="'+background+'"/>'
             svgFile.write(header)
             svgFile.write(back)
@@ -77,6 +77,7 @@ class NFTSeeder:
                 svgFile.write(rect)
             for rect in headRects:
                 svgFile.write(rect)
+
             svgFile.write('</svg>')
 
 

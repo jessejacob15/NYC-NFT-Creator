@@ -25,13 +25,9 @@ def main():
 
     imgToSVG = imgToSvg("head")
 
-    imgToSVG.convertImageToSVG("head.png")
+    imgToSVG.convertImageToSVG("head_square.png")
     head1 = imgToSVG.byteComponents
     print(imgToSVG.bounds)
-    strRLE = imgToSVG.toRLE()
-    strRLE = "0" +  "120" + "614" + "818" + "139" + strRLE
-    intRLE = strRLE.encode('utf-8')
-    print(intRLE.hex())
     headColors = imgToSVG.colors
     seeder.addHead(head1)
     seeder.addHeadPalette(headColors)
@@ -65,7 +61,7 @@ def main():
         seeder.addSkinPalette(genPalette)
 
     imgToSVG = imgToSvg("body")
-    imgToSVG.convertImageToSVG("jacket.png")
+    imgToSVG.convertImageToSVG("jacket_square.png")
     jacket1 = imgToSVG.byteComponents
     jacketColors = imgToSVG.colors
     seeder.addJacket(jacket1)

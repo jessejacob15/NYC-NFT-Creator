@@ -117,10 +117,10 @@ class imgToSvg:
         out and only red remains.
         """
         myImg = img.copy() # create copy to manipulate
-        for y in range(self.bounds[0],(self.bounds[2]),20): # iterate through all (x, y) pixel pairs
+        for y in range(self.bounds[0],(self.bounds[2]),self.pixelMult): # iterate through all (x, y) pixel pairs
             imgStart = False
             endX = self.getEndX(img, y)
-            for x in range(self.bounds[3],(self.bounds[1]),20):
+            for x in range(self.bounds[3],(self.bounds[1]),self.pixelMult):
                 startY = self.getStartY(img, x)
                 pixel = img.getPixel(x, y)
                 red = pixel.getRed()
@@ -133,14 +133,14 @@ class imgToSvg:
                     color = '#%02x%02x%02x' % (finalRGB[0], finalRGB[1], finalRGB[2])
                     if color not in self.colors:
                         self.colors.append(color)
-                    newByte = ByteComponent(y, x+20, y+20, x)
+                    newByte = ByteComponent(y, x+self.pixelMult, y+self.pixelMult, x)
                     newByte.setColor(self.colors.index(color))
                     newByte.setLength(1)
                     self.byteComponents.append(newByte)
                     newPixel = image.Pixel(finalRGB[0], finalRGB[1], finalRGB[2])
                     imgStart = True
                 else:
-                    newByte = ByteComponent(y,x+20,y+20,x)
+                    newByte = ByteComponent(y,x+self.pixelMult,y+self.pixelMult,x)
                     color = '#00000000'
                     if color not in self.colors:
                         self.colors.append(color)
@@ -149,7 +149,6 @@ class imgToSvg:
                     self.byteComponents.append(newByte)
             lastByte = self.byteComponents[-1]
             lastByte.end = True
-        self.repositionBytes()
 
                     
     
@@ -202,8 +201,8 @@ class imgToSvg:
                 blue = pixel.getBlue()
                 color = '#%02x%02x%02x' % (red, green, blue)
                 if color != '#000000':
-                    for i in range(x, x+20):
-                        for j in range(y, y + 20):
+                    for i in range(x, x+self.pixelMult):
+                        for j in range(y, y + self.pixelMult):
                             copyImg.setPixel(i, j, self.redPixel)
                     # copyImg.save("generatedImages/withred")
                     return y
@@ -219,8 +218,8 @@ class imgToSvg:
                 blue = pixel.getBlue()
                 color = '#%02x%02x%02x' % (red, green, blue)
                 if color != '#000000':
-                    for i in range(x, x+20):
-                        for j in range(y, y + 20):
+                    for i in range(x, x+self.pixelMult):
+                        for j in range(y, y + self.pixelMult):
                             copyImg.setPixel(i, j, self.redPixel)
                     # copyImg.save("generatedImages/withred")            
                     return x
@@ -236,8 +235,8 @@ class imgToSvg:
                 blue = pixel.getBlue()
                 color = '#%02x%02x%02x' % (red, green, blue)
                 if color != '#000000':
-                    for i in range(x, x+20):
-                        for j in range(y, y -20,-1):
+                    for i in range(x, x+self.pixelMult):
+                        for j in range(y, y -self.pixelMult,-1):
                             copyImg.setPixel(i, j, self.redPixel)
                     # copyImg.save("generatedImages/withred")
                     return y     
@@ -266,8 +265,8 @@ class imgToSvg:
                 blue = pixel.getBlue()
                 color = '#%02x%02x%02x' % (red, green, blue)
                 if color != '#000000':
-                    for i in range(x, x-20, -1):
-                        for j in range(y, y + 20):
+                    for i in range(x, x-self.pixelMult, -1):
+                        for j in range(y, y + self.pixelMult):
                             copyImg.setPixel(i, j, self.redPixel)
                     # copyImg.save("generatedImages/withred")
                     return x      
@@ -332,23 +331,23 @@ class imgToSvg:
                 else:
                     fileRLE += str(currLen) + "|" + str(prev) + " "
                     strRLE += str(currLen) + str(prev)
-                    newRect = '<rect width="'+ str(20* currLen)+'" height= "' + str(20) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[prev]) +'"/>'
+                    newRect = '<rect width="'+ str(self.pixelMult* currLen)+'" height= "' + str(self.pixelMult) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[prev]) +'"/>'
                     svgFile.write(newRect)
                     
                     finalRLE.append(currLen)
                     finalRLE.append(prev)
-                    xval += 20*currLen
+                    xval += self.pixelMult*currLen
                     currLen = 1     
 
                 if (i == len(row) - 1):
                     fileRLE += str(currLen) + "|" + str(curr) + '\n'
                     strRLE += str(currLen) +  str(curr)
-                    newRect = '<rect width="'+ str(20* currLen)+'" height= "' + str(20) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[curr]) +'"/>'
+                    newRect = '<rect width="'+ str(self.pixelMult* currLen)+'" height= "' + str(self.pixelMult) +'" x="' + str(xval)+ '" y="'+ str(yval)+ '" fill="'+ str(self.colors[curr]) +'"/>'
                     svgFile.write(newRect)
                     finalRLE.append(currLen)
                     finalRLE.append(curr)
                 prev = curr
-            yval += 20
+            yval += self.pixelMult
 
         svgFile.write('</svg>') 
         f = open("RLE"+self.compType+"-rows.txt", "w")
@@ -410,7 +409,7 @@ class imgToSvg:
                     arrayItems.append(currColor)
 
                 currColor = rect["hexColor"]
-                currX = 20* currLen
+                currX = self.pixelMult* currLen
                 currLen = 1
         f = open("RLE"+self.compType+"-rows.txt", "w")
         f.write(arrayItems)
