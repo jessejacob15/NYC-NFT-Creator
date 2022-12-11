@@ -69,7 +69,9 @@ class PaletteGenerator:
 
             self.colorDirects[self.colors[i]] = (clusterIndex,[diffR, diffG, diffB])
 
-    def generateNewPalette(self, hexColorArray):
+
+
+    def generateNewPalette(self, hexColorArray, override=False):
         if len(hexColorArray) != len(self.centers):
             print("Please only choose "+ len(self.centers) + " colors.")
             return
@@ -103,8 +105,12 @@ class PaletteGenerator:
                 generatedRGB.insert(key,[newR, newG, newB])
 
             generatedHex = ['#00000000']
-            for rgbColor in generatedRGB:
-                generatedHex.append(matplotlib.colors.to_hex(rgbColor))    
+            if not override:
+                for rgbColor in generatedRGB:
+                    generatedHex.append(matplotlib.colors.to_hex(rgbColor))    
+            else:
+                for rgbColor in generatedRGB:
+                    generatedHex.append(hexColorArray[0])
             return generatedHex
         
 
